@@ -356,6 +356,11 @@ body.touch #gl-pos { font-size: 18px; min-width: 48px; }
 .bd-graph svg { height: 130px; }
 .bd-note { margin: 4px 0 0; font: 500 12.5px/1.45 var(--body); color: var(--muted); }
 .bd-note b { color: #fff; font-weight: 700; }
+#bd-facts { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-top: 8px; }
+#bd-facts { grid-template-columns: repeat(5, minmax(0, 1fr)) !important; }
+#bd-facts > div { display: grid; gap: 1px; padding: 6px 8px; border-radius: 10px; background: rgba(255,255,255,.04); min-width: 0; }
+#bd-facts b { font: 800 15px var(--display); color: #fff; direction: rtl; unicode-bidi: plaintext; text-align: right; } #bd-facts span { font: 600 11.5px var(--display); color: #c6d2e3; } #bd-facts small { font: 500 10.5px/1.35 var(--body); color: var(--muted); }
+body.portrait #bd-facts { grid-template-columns: 1fr 1fr !important; }
 #bd-list { display: grid; gap: 8px; overflow-y: auto; max-height: 520px; padding-inline-end: 2px; }
 .ev { display: grid; grid-template-columns: 34px 1fr; gap: 4px 10px; align-items: start; padding: 9px 10px; border-radius: 12px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.07); }
 .ev .ic { grid-row: 1 / 3; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font: 800 16px var(--dash); color: #06101c; background: var(--c, var(--blue)); box-shadow: 0 0 14px var(--c, var(--blue)); }
@@ -711,10 +716,6 @@ body.portrait #rp { width: 94vw; }
       <h2>מוסך</h2><p>15 רכבים, כל אחד עם פיזיקה משלו. בחרו את שלכם.</p>
       <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 30h36l-3-9c-1-3-3-4-6-4H15c-3 0-5 1-6 4z"/><circle cx="14" cy="33" r="4"/><circle cx="34" cy="33" r="4"/></svg>
     </button>
-    <button class="card" data-go="lab" style="--c:var(--green)">
-      <h2>מעבדת פיזיקה</h2><p>מהירות, תאוצה ומרחק: מודדים ובודקים.</p>
-      <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3"><path d="M8 40a16 16 0 1 1 32 0"/><path d="M24 40l9-12"/><circle cx="24" cy="40" r="2" fill="currentColor"/></svg>
-    </button>
   </div>
   <div class="menu-foot"><button class="chip-btn" id="wx">מזג אוויר: בהיר</button><button class="chip-btn" id="lessons">שיעורי נהיגה: כבוי</button><button class="chip-btn" id="snd">צליל: פועל</button><button class="chip-btn" id="fs">מסך מלא</button></div>
 </div>
@@ -865,7 +866,7 @@ body.portrait #rp { width: 94vw; }
     <section class="bd-card bd-forces"><h3>הכוחות על הרכב ברגע העצירה</h3><svg id="bd-forces" viewBox="0 0 340 300"></svg><p class="bd-note" id="bd-fnote"></p></section>
     <section class="bd-card bd-gg"><h3>מעגל האחיזה</h3><svg id="bd-gg" viewBox="0 0 220 220"></svg><p class="bd-note" id="bd-gnote"></p></section>
     <section class="bd-card bd-events"><h3>מה קרה בנסיעה</h3><div id="bd-list"></div></section>
-    <section class="bd-card bd-graph"><h3>מהירות לאורך הנסיעה</h3><svg id="bd-graph" viewBox="0 0 600 130" preserveAspectRatio="none"></svg></section>
+    <section class="bd-card bd-graph"><h3>מהירות <span style="color:#3fa3ff">━</span> ומרחק <span style="color:#ffb020">━</span> לאורך הנסיעה</h3><svg id="bd-graph" viewBox="0 0 600 130" preserveAspectRatio="none"></svg><div id="bd-facts"></div></section>
   </div>
   <p id="p-help">גז: ↑ או W · בלם ורוורס: ↓ או S · היגוי: ← → · בלם יד: רווח · איתות: Q / E · צופר: H · מטריקס: B · ניטרו: N · רדיו: M · הפסקה: P</p>
 </div></div>
@@ -3054,6 +3055,19 @@ function renderBoard() {
   for (let vk = 50; vk < vmax; vk += 50) gr += `<line x1="0" x2="600" y1="${Y(vk)}" y2="${Y(vk)}" stroke="rgba(255,255,255,.08)"/><text x="4" y="${+Y(vk) - 3}" fill="#6c7d94" font-size="10" direction="rtl" text-anchor="end">${vk} קמ"ש</text>`;
   for (const ev of rec.events) if (ev.t >= t0) { const [ic, col] = EV_STYLE[ev.kind] || ['•', '#fff']; gr += `<line x1="${X(ev.t)}" x2="${X(ev.t)}" y1="8" y2="126" stroke="${col}" stroke-opacity=".55" stroke-dasharray="3 3"/><text x="${X(ev.t)}" y="9" fill="${col}" font-size="11" text-anchor="middle">${ic}</text>`; }
   if (fr.length > 1) gr += `<polyline fill="none" stroke="#3fa3ff" stroke-width="2.2" vector-effect="non-scaling-stroke" points="${fr.filter((q, i) => i % 3 === 0).map(q => X(q.t) + ',' + Y(q.speed * 3.6)).join(' ')}"/>`;
+  // distance: the area under the speed curve, added up as the drive goes
+  let dist = 0, aMax = 0, bMax = 0; const dPts = [];
+  fr.forEach((q, i) => { if (i) { const pq = fr[i - 1], dt = q.t - pq.t; if (dt < 1) dist += (q.speed + pq.speed) / 2 * dt; } aMax = Math.max(aMax, q.aLong); bMax = Math.max(bMax, -q.aLong); if (i % 3 === 0) dPts.push([q.t, dist]); });
+  if (dPts.length > 1) { const dm = Math.max(50, dist) * 1.1; gr += `<polyline fill="none" stroke="#ffb020" stroke-width="2" stroke-dasharray="6 4" vector-effect="non-scaling-stroke" points="${dPts.map(([t, d]) => X(t) + ',' + (126 - d / dm * 116).toFixed(1)).join(' ')}"/><text x="596" y="12" fill="#ffb020" font-size="10" text-anchor="end">${Math.round(dist)} מ'</text>`; }
+  const span = fr.length > 1 ? fr.at(-1).t - fr[0].t : 0, vTop = Math.max(0, ...fr.map(q => q.speed)), brk = brakeA();
+  const fact = (k, v, sub) => `<div><b class="num">${v}</b><span>${k}</span>${sub ? `<small>${sub}</small>` : ''}</div>`;
+  $('bd-facts').innerHTML = fr.length > 1 ? [
+    fact('מרחק שנסעתם', `${Math.round(dist)} מ'`, 'השטח שמתחת לגרף המהירות'),
+    fact('מהירות ממוצעת', `${Math.round(dist / Math.max(span, 0.01) * 3.6)} קמ"ש`, 'מרחק חלקי זמן'),
+    fact('האצה חזקה ביותר', `${Math.round(aMax * 3.6)} קמ"ש בשנייה`, ''),
+    fact('בלימה חזקה ביותר', `${Math.round(bMax * 3.6)} קמ"ש בשנייה`, ''),
+    fact(`מרחק בלימה מ-${Math.round(vTop * 3.6)} קמ"ש`, `${Math.round(vTop * vTop / (2 * brk))} מ'`, `מחצי מהמהירות רק ${Math.round(vTop * vTop / 8 / brk)} מ': פי 2 מהירות = פי 4 מרחק`)
+  ].join('') : '';
   $('bd-graph').innerHTML = gr || `<text x="300" y="70" fill="#6c7d94" font-size="13" text-anchor="middle">עוד אין נתונים</text>`;
   // the event log, newest first
   $('bd-list').innerHTML = rec.events.length ? rec.events.map((ev, i) => [ev, i]).reverse().map(([ev, i]) => {
@@ -4251,7 +4265,6 @@ cards.forEach((c, i) => {
     if (wiping) return;
     initAudio(); beep(990, 0.08, 'square', 0.08);
     const go = c.dataset.go;
-    if (go === 'lab') { wipe(() => { location.href = 'lab.html'; }); return; }
     if (go === 'garage') { openGarage(null); return; }
     if (!carChosen) { openGarage(go); return; }
     if (go === 'gp') { launchGP(); return; }
