@@ -125,6 +125,37 @@ button { font: inherit; color: inherit; }
 #radio.game { top: calc(12px + var(--sat)); bottom: auto; left: 50%; transform: translateX(-50%); padding: 5px 12px 5px 8px; font-size: 12px; max-width: min(180px, 18vw); }
 body.touch #radio.game { top: calc(104px + var(--sat)); left: calc(12px + var(--sal)); transform: none; padding: 7px; }
 body.touch #radio.game .rn, body.touch #radio.game .eq { display: none; }
+/* ---------- Car stereo ---------- */
+#stereo { position: fixed; inset: 0; z-index: 45; display: none; place-items: center; background: rgba(2,4,10,.45); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+#stereo.on { display: grid; }
+#stereo .unit { width: min(520px, 94vw); padding: 12px 14px 14px; border-radius: 16px; direction: ltr; display: grid; gap: 10px; animation: sheetIn .3s cubic-bezier(.2,.9,.2,1) both;
+  background: linear-gradient(180deg, #2a2f38, #14171d 60%, #0d0f13); border: 1px solid #3a414d; box-shadow: 0 30px 80px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.12), inset 0 -2px 0 rgba(0,0,0,.6); }
+.st-brand { display: flex; align-items: center; gap: 10px; font: italic 700 13px var(--tech); color: #cfd6e0; letter-spacing: .08em; }
+.st-brand b { color: #fff; } .st-brand b::first-letter { color: var(--hot); }
+.st-brand span { color: #6c7a8c; font-size: 11px; flex: 1; }
+#st-close { width: 30px; height: 30px; border-radius: 8px; border: 1px solid #3a414d; background: #1b1f26; color: #cfd6e0; cursor: pointer; }
+.st-face { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: stretch; }
+.st-lcd { border-radius: 8px; padding: 8px 12px; min-height: 86px; background: radial-gradient(120% 140% at 30% 20%, #0f3a4a, #062029 70%); border: 2px solid #050a0d; box-shadow: inset 0 0 18px rgba(0,0,0,.7), 0 0 0 1px #2c3440;
+  color: #7ff3ff; text-shadow: 0 0 8px rgba(127,243,255,.65); font-family: var(--dash); overflow: hidden; display: grid; gap: 4px; }
+.st-top { display: flex; justify-content: space-between; font-size: 11px; letter-spacing: .12em; opacity: .85; }
+.st-name { font-size: 19px; font-weight: 700; white-space: nowrap; overflow: hidden; }
+#stereo.playing .st-name span { display: inline-block; animation: stMarq 9s linear infinite; padding-inline-start: 100%; }
+@keyframes stMarq { to { transform: translateX(-100%); } }
+.st-eq { display: flex; gap: 3px; align-items: flex-end; height: 22px; }
+.st-eq i { flex: 1; height: 15%; background: linear-gradient(0deg, #2ee6ff, #b8fbff 70%, #ff3d7f); opacity: .9; border-radius: 1px; }
+#stereo.playing .st-eq i { animation: stEq .7s ease-in-out infinite alternate; }
+.st-eq i:nth-child(3n) { animation-duration: .5s !important; } .st-eq i:nth-child(4n+1) { animation-duration: .9s !important; } .st-eq i:nth-child(5n+2) { animation-delay: -.3s; } .st-eq i:nth-child(2n) { animation-delay: -.6s; }
+@keyframes stEq { from { height: 12%; } to { height: 100%; } }
+.st-btn { min-width: 52px; border-radius: 10px; border: 1px solid #454d5a; cursor: pointer; color: #e6ebf2; font: 700 18px var(--body);
+  background: linear-gradient(180deg, #3a414d, #1d2129); box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 3px 0 #07080b, 0 6px 12px rgba(0,0,0,.4); }
+.st-btn:active { transform: translateY(2px); box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 1px 0 #07080b; }
+.st-btn.big { min-width: 76px; height: 48px; font-size: 18px; color: #fff; background: linear-gradient(180deg, #ff4d6d, #b3123a); border-color: #ff7a93; }
+.st-row { display: flex; gap: 10px; align-items: center; }
+.st-pre { flex: 1; display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.st-pre button { height: 40px; border-radius: 8px; border: 1px solid #454d5a; cursor: pointer; color: #9fb0c6; font: 800 15px var(--dash);
+  background: linear-gradient(180deg, #2a2f38, #171a20); box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 3px 0 #07080b; }
+.st-pre button.sel { color: #7ff3ff; border-color: #2ee6ff; text-shadow: 0 0 8px #2ee6ff; box-shadow: inset 0 0 12px rgba(46,230,255,.25), 0 3px 0 #07080b; }
+
 /* ---------- First-run car pick ---------- */
 .g-pick { display: none; margin: 0; font: 900 italic clamp(20px, 3vw, 30px) var(--display); text-shadow: 0 2px 12px #000; }
 #garage.first .g-pick { display: block; }
@@ -475,8 +506,15 @@ body.replaying #carload { display: none; }
   left: calc(3vw + var(--sal)) !important; right: auto !important; top: 50% !important; bottom: auto !important; transform: translateY(-50%) !important; animation: btFocus .35s cubic-bezier(.2,.9,.2,1) both; }
 @keyframes btFocus { from { opacity: 0; translate: -20px 0; } }
 #bt-steps { position: absolute; left: 50%; bottom: calc(22px + var(--sab)); transform: translateX(-50%); display: flex; align-items: center; gap: 7px; padding: 8px 14px; border-radius: 999px; background: rgba(3,14,9,.78); border: 1px solid rgba(109,255,176,.35); }
+#bt-steps { pointer-events: auto; }
+#bt-steps button { width: 32px; height: 32px; border-radius: 50%; border: 1px solid rgba(109,255,176,.5); background: rgba(3,30,18,.8); color: #dfffee; font: 700 14px var(--body); cursor: pointer; display: grid; place-items: center; padding: 0; }
+#bt-steps button[data-a="pause"] { width: 38px; height: 38px; font-size: 16px; background: #1d6b45; }
+#bt.held #bt-steps button[data-a="pause"] { background: #6dffb0; color: #03140c; }
+#bt-steps i { cursor: pointer; }
 #bt-steps i { width: 9px; height: 9px; border-radius: 50%; background: rgba(109,255,176,.2); border: 1px solid rgba(109,255,176,.5); }
 #bt-steps i.done { background: #6dffb0; } #bt-steps i.now { background: #fff; box-shadow: 0 0 10px #6dffb0; transform: scale(1.3); }
+body.portrait #bt-steps { bottom: calc(70px + var(--sab)); max-width: 94vw; flex-wrap: wrap; justify-content: center; }
+body.portrait #bt-steps b { width: 100%; text-align: center; margin: 0; }
 #bt-steps b { margin-inline-start: 8px; font: 700 13px var(--display); color: #dfffee; direction: rtl; white-space: nowrap; }
 /* the formula being worked out, right next to its point on the car */
 #bt-focus { position: absolute; transform: translate(-50%, calc(-100% - 22px)); min-width: 180px; max-width: min(360px, 80vw); padding: 10px 14px; border-radius: 12px; display: none;
@@ -576,15 +614,19 @@ body.portrait .logo h1 { font-size: clamp(34px, 11.5vw, 72px); }
 body.portrait .logo .sub { font-size: clamp(14px, 4.2vw, 20px); }
 body.portrait .press { bottom: calc(18% + var(--sab)); }
 /* menu: full-width cards, settings chips at the bottom */
-body.portrait #menu { padding: calc(14px + var(--sat)) 14px calc(80px + var(--sab)); background: linear-gradient(0deg, rgba(5,7,15,.92) 0%, rgba(5,7,15,.6) 60%, rgba(5,7,15,.25) 100%); }
+body.portrait #menu { padding: calc(14px + var(--sat)) 14px calc(150px + var(--sab)); background: linear-gradient(0deg, rgba(5,7,15,.92) 0%, rgba(5,7,15,.6) 60%, rgba(5,7,15,.25) 100%); }
 body.portrait .menu-head { flex-wrap: wrap; justify-content: center; gap: 8px 12px; }
 body.portrait .menu-head .tag { display: none; }
-body.portrait .cards { width: 100%; margin-top: 14px; gap: 7px; }
-body.portrait .card { padding: 9px 18px 9px 16px; }
-body.portrait .card h2 { font-size: 19px; }
-body.portrait .card p { display: block; font-size: 12px; }
-body.portrait .card .ico { width: 34px; height: 34px; }
-body.portrait .menu-foot { top: auto; bottom: calc(14px + var(--sab)); left: 12px; right: 12px; justify-content: center; flex-wrap: wrap; gap: 6px; }
+/* portrait: compact two-column tiles at the bottom, the car stays in view above them */
+body.portrait #menu.on { display: flex; flex-direction: column; background: linear-gradient(0deg, rgba(5,7,15,.94) 0%, rgba(5,7,15,.75) 38%, rgba(5,7,15,0) 58%); }
+body.portrait .cards { width: 100%; margin-top: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 6px !important; }
+body.portrait .card { padding: 8px 12px 8px 8px !important; grid-template-columns: 1fr auto; gap: 0 8px; clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 10px 100%); }
+body.portrait .card h2 { font-size: 15px !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+body.portrait .card p { display: none; }
+body.portrait .card .ico { width: 24px; height: 24px; grid-row: 1; }
+body.portrait .card:last-child:nth-child(odd) { grid-column: 1 / -1; }
+body.portrait .card:hover, body.portrait .card.sel { transform: none !important; }
+body.portrait .menu-foot { top: auto; bottom: calc(62px + var(--sab)); left: 12px; right: 12px; justify-content: center; flex-wrap: wrap; gap: 6px; }
 body.portrait .menu-foot .chip-btn { padding: 7px 12px; font-size: 13px; }
 /* garage: car on top, the card underneath */
 body.portrait.touch .garage-ui { top: auto; left: 0; right: 0; bottom: 0; width: auto; max-height: 58vh; overflow-y: auto; padding: 12px 12px calc(12px + var(--sab)); align-content: end;
@@ -593,7 +635,7 @@ body.portrait.touch .gstats { grid-template-columns: 1fr 1fr; gap: 6px 12px; }
 body.portrait.touch #g-go { position: static; transform: none; justify-self: center; }
 body.portrait.touch .gcar { width: 100%; box-sizing: border-box; } body.portrait.touch .ginfo { width: auto; box-sizing: border-box; min-width: 0; }
 body.portrait.touch .garage-ui { justify-items: stretch; }
-body.portrait #radio:not(.game) { bottom: calc(62px + var(--sab)); }
+body.portrait #radio:not(.game) { bottom: calc(14px + var(--sab)); left: 50%; transform: translateX(-50%); }
 /* HUD: panels in one row at the top, minimap under them on the left, buttons below */
 body.portrait.touch .h-tr { top: calc(8px + var(--sat)); right: 8px; left: 8px; gap: 6px; justify-content: flex-start; zoom: 1; }
 body.portrait.touch .h-tr .hpanel { padding: 6px 10px; border-radius: 12px; }
@@ -611,10 +653,11 @@ body.portrait.touch .physics { bottom: calc(8px + var(--sab)); width: 94vw; }
 body.portrait.touch .pgrid { grid-template-columns: repeat(4, 1fr); }
 body.portrait.touch .pcell { padding: 3px 6px; } body.portrait.touch .pcell .k { font-size: 9.5px; } body.portrait.touch .pcell .v { font-size: 14px; }
 body.portrait #turbo { top: 40%; }
-body.portrait .dlg { left: 3vw; right: 3vw; width: auto; }
+body.portrait .dlg { width: 94vw; box-sizing: border-box; bottom: calc(18vh + var(--sab)); padding: 12px 14px 20px; gap: 12px; }
+body.portrait .dlg .txt { font-size: 15px; }
 /* bullet time: only the step being explained, at the bottom */
 body.portrait .btb:not(.focus) { display: none; }
-body.portrait .btb.focus, body.portrait #bt-boxes.stepping .btb.focus { left: 4vw !important; right: 4vw !important; width: auto; top: auto !important; bottom: calc(76px + var(--sab)) !important; transform: none !important; zoom: 1; }
+body.portrait .btb.focus, body.portrait #bt-boxes.stepping .btb.focus { left: 4vw !important; right: 4vw !important; width: auto; top: auto !important; bottom: calc(132px + var(--sab)) !important; transform: none !important; zoom: 1; }
 body.portrait .bt-badge { top: calc(64px + var(--sat)); }
 /* physics board: one column */
 body.portrait .bd-grid { grid-template-columns: 1fr; grid-template-areas: "f" "g" "e" "s"; }
@@ -761,6 +804,15 @@ body.portrait #rp { width: 94vw; }
 <div id="bt"><svg id="bt-lines"></svg><div id="bt-boxes"></div><div id="bt-focus"></div><div id="bt-ring"></div><div id="bt-steps"></div><div class="bt-badge"><b>BULLET TIME</b><span id="bt-scale">×1.00</span></div><button id="bt-skip" type="button">דלג ⏭</button></div>
 <div id="rp"><div class="rp-top"><span class="rp-badge">● REPLAY</span><b id="rp-title"></b></div><div class="rp-cap" id="rp-cap"></div><div class="rp-bar"><i id="rp-prog"></i></div>
   <div class="rp-btns"><button class="btn alt" id="rp-again" type="button">שוב ↺</button><button class="btn" id="rp-back" type="button">חזרה ללוח</button></div></div>
+<div id="stereo" role="dialog" aria-label="רדיו"><div class="unit">
+  <div class="st-brand"><b>NICK 4 SPEED</b><span>AUDIO · SR-4</span><button id="st-close" type="button" aria-label="סגירה">✕</button></div>
+  <div class="st-face">
+    <button class="st-btn" id="st-prev" type="button" aria-label="הקודם">⏮</button>
+    <div class="st-lcd"><div class="st-top"><span id="st-trk">TRACK 1/5</span><span id="st-time">0:00</span></div><div class="st-name"><span id="st-name"></span></div><div class="st-eq"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+    <button class="st-btn" id="st-next" type="button" aria-label="הבא">⏭</button>
+  </div>
+  <div class="st-row"><button class="st-btn big" id="st-play" type="button" aria-label="נגינה / השהיה">▶</button><div class="st-pre"></div></div>
+</div></div>
 <div id="carload"><span id="cl-txt">טוען מכונית</span><b id="cl-pct" class="num">0%</b><i><u id="cl-bar"></u></i></div>
 <div id="dialog"><div class="lbx top"></div><div class="lbx bot"></div>
   <div class="dlg" id="dlg-box"><div class="av" id="dlg-av">מ</div><div class="dbody"><div class="who" id="dlg-who"></div><div class="txt" id="dlg-txt"></div></div><div class="nxt">רווח · הקשה להמשך ◂</div></div>
@@ -2192,6 +2244,15 @@ function triggerBT(kind = false) {
   if (kind === false) logEvent('freeze', 'עצירת זמן', `${Math.round(P.speed * 3.6)} קמ"ש · תאוצה ${P.aLong.toFixed(1)} מ'/שנ'² · כוח G בפנייה ${P.gLat.toFixed(2)}g`, true);
   return true;
 }
+const BT_STEP = 3.2;
+// pause on a formula, or step back and forth through them
+function btPause(p = !BT.paused) { if (!BT.on) return; BT.paused = p; $('bt').classList.toggle('held', p); }
+function btGo(k) {
+  if (!BT.on) return;
+  const n = BT.boxes.length, step = (BT.dur - 1.4) / n;
+  k = clamp(k, 0, n - 1); BT.t = 0.9 + (k + 0.7) * step; btPause(true); beep(760, 0.04, 'triangle', 0.06);
+}
+function btStep() { const n = BT.boxes.length, step = (BT.dur - 1.4) / n; return clamp(Math.floor((BT.t - 0.9) / step), 0, n - 1); }
 function btBegin(dur) {
   BT.on = true; BT.t = 0; BT.dur = dur; BT.ang = P.h; BT.look.copy(camRig.look);
   glitch = Math.max(glitch, 0.45);
@@ -2202,7 +2263,8 @@ function btBegin(dur) {
     whoosh(false);
   }
   buildBoxes();
-  BT.dur = Math.max(BT.dur, 1.4 + BT.boxes.length * 1.25); // time to work through every formula
+  BT.dur = Math.max(BT.dur, 1.4 + BT.boxes.length * BT_STEP); BT.paused = false; // time to work through every formula
+  $('bt').classList.remove('held');
   $('bt').classList.add('on'); $('hud').classList.add('dim');
 }
 function endBT() {
@@ -2319,7 +2381,9 @@ function updateGripViz(on) {
   gripArrow.visible = am > 0.05;
   const col = over ? 0xff4d4d : 0x6dffb0; gripArrow.setColor(col); gripRing.material.color.setHex(P.spin ? 0xc9a0ff : 0x6dffb0);
   // its label at the circle's edge
-  _a.set(P.x + (lx - fx) * 0.707 * r, y, P.z + (lz - fz) * 0.707 * r).project(camera);
+  let best = -1e9, bx = 0, bz = 0;
+  for (let i = 0; i < 12; i++) { const ang = i / 12 * Math.PI * 2, x = P.x + Math.cos(ang) * r, z = P.z + Math.sin(ang) * r; _a.set(x, y, z).project(camera); if (_a.z < 1 && -_a.y > best) { best = -_a.y; bx = x; bz = z; } }
+  _a.set(bx, y, bz).project(camera);
   const el = $('bt-ring');
   if (_a.z < 1) { el.style.display = ''; el.style.left = ((_a.x * 0.5 + 0.5) * innerWidth) + 'px'; el.style.top = ((-_a.y * 0.5 + 0.5) * innerHeight) + 'px';
     el.innerHTML = `גבול האחיזה <b class="ltr">μ·g = ${aG.toFixed(1)}</b><br>התאוצה עכשיו <b class="ltr" style="color:${over ? '#ff6b6b' : '#6dffb0'}">${am.toFixed(1)} m/s²</b>`; }
@@ -2328,7 +2392,7 @@ function updateGripViz(on) {
 function updateBT(dt) {
   if (BT.cd > 0) BT.cd -= dt;
   if (!BT.on) { BT.scale = Math.min(1, BT.scale + dt * 8); fx.uniforms.uMatrix.value = Math.max(0, fx.uniforms.uMatrix.value - dt * 6); if (gripRing.visible) updateGripViz(false); $('bt-focus').style.display = 'none'; return; }
-  BT.t += dt;
+  if (!BT.paused) BT.t += dt;
   BT.scale = Math.max(0.02, BT.scale - dt * 6);
   fx.uniforms.uMatrix.value = Math.min(1, fx.uniforms.uMatrix.value + dt * 4);
   if (BT.t >= BT.dur) { endBT(); return; }
@@ -2352,24 +2416,24 @@ function updateBT(dt) {
   // one quantity at a time: its card lights up, and next to its point on the car the formula is worked out —
   // symbols, then this moment's numbers, then the result
   const n = BT.boxes.length, t0 = 0.9, step = Math.max(0.45, (BT.dur - 1.4) / n), si = Math.floor((BT.t - t0) / step), su = (BT.t - t0) / step - si;
+  if (BT.paused && si >= n) btGo(n - 1);
   const focus = BT.t >= t0 && si < n ? BT.boxes[si] : null;
   const fe = $('bt-focus');
   if (focus) {
-    const stage = su < 0.3 ? 0 : su < 0.62 ? 1 : 2;
-    if (fe._k !== si + ':' + stage) {
-      fe._k = si + ':' + stage;
-      const sym = focus.sym || focus.title, sub = focus.sub || focus.formula, res = focus.res || (typeof focus.value === 'number' ? focus.value.toFixed(focus.dec) + ' ' + focus.unit : focus.value);
-      fe.innerHTML = `<div class="t">${focus.title}</div><div class="l s0">${sym}</div>` + (stage >= 1 ? `<div class="l s1">= ${sub}</div>` : '') + (stage >= 2 ? `<div class="l s2">= ${res}</div>` : '');
-    }
+    const stage = su < 0.22 ? 0 : su < 0.5 ? 1 : 2;
+    if (fe._si !== si || fe._box !== focus) { fe._si = si; fe._box = focus; fe._stage = -1; fe.innerHTML = `<div class="t">${focus.title}</div>`; }
+    const lines = [focus.sym || focus.title, '= ' + (focus.sub || focus.formula), '= ' + (focus.res || (typeof focus.value === 'number' ? focus.value.toFixed(focus.dec) + ' ' + focus.unit : focus.value))];
+    while (fe._stage < stage) { fe._stage++; const d = document.createElement('div'); d.className = 'l s' + fe._stage; d.innerHTML = lines[fe._stage]; fe.appendChild(d); }
     _a.copy(focus.anchor).applyMatrix4(car.matrixWorld).project(camera);
     if (_a.z < 1) { fe.style.display = 'block'; fe.style.left = ((_a.x * 0.5 + 0.5) * innerWidth) + 'px'; fe.style.top = ((-_a.y * 0.5 + 0.5) * innerHeight) + 'px'; } else fe.style.display = 'none';
   } else fe.style.display = 'none';
   BT.boxes.forEach(b => b.el.classList.toggle('focus', b === focus));
   $('bt-boxes').classList.toggle('stepping', true);
   const steps = $('bt-steps');
-  if (steps._n !== n) { steps._n = n; steps.innerHTML = BT.boxes.map(b => `<i title="${b.title.replace(/"/g, '')}"></i>`).join('') + '<b></b>'; }
-  [...steps.children].forEach((d, i) => { if (d.tagName === 'I') d.className = i < si ? 'done' : i === si ? 'now' : ''; });
-  steps.lastChild.textContent = focus ? `${si + 1}/${n} · ${focus.title}` : '';
+  if (steps._n !== n) { steps._n = n; steps.innerHTML = `<button data-a="next" aria-label="הבא">◀</button><button data-a="pause" aria-label="עצירה">⏸</button><button data-a="prev" aria-label="הקודם">▶</button>` + BT.boxes.map((b, i) => `<i data-k="${i}" title="${b.title.replace(/"/g, '')}"></i>`).join('') + '<b></b>'; }
+  steps.querySelectorAll('i').forEach((d, i) => { d.className = i < si ? 'done' : i === si ? 'now' : ''; });
+  steps.querySelector('[data-a="pause"]').textContent = BT.paused ? '▶︎' : '⏸';
+  steps.lastChild.textContent = focus ? `${si + 1}/${n} · ${focus.title}${BT.paused ? ' · עצור' : ''}` : '';
   // callout boxes: count the numbers up, then draw a leader line from each box to its point on the car
   let svg = '';
   for (const b of BT.boxes) {
@@ -3090,6 +3154,7 @@ function storyDone() {
 
 // dialogue box with letterbox bars and a typewriter; the world keeps moving behind it
 function dialog(lines, done) {
+  releaseSticks(); for (const k in keys) keys[k] = false;
   if (!lines.length) { done(); return; }
   story.d = { lines, i: 0, done, shown: 0, full: false };
   state = 'dialog'; game.running = false;
@@ -3124,7 +3189,7 @@ $('dialog').addEventListener('pointerdown', e => { e.stopPropagation(); dialogAd
 // ================= Audio =================
 let AC = null, master, engGain, osc1, osc2, engFilter, muted = false;
 try { muted = localStorage.getItem('n4s-mute') === '1'; } catch (e) {}
-const SFX_VOL = 0.8 * 0.708; // −3 dB
+const SFX_VOL = 0.8 * 0.5; // −6 dB
 function initAudio() {
   if (AC) { if (AC.state === 'suspended') AC.resume(); return; }
   try {
@@ -3219,7 +3284,13 @@ const radio = (() => {
   el.addEventListener('loadedmetadata', () => { if (r.seek) { try { el.currentTime = r.seek % (el.duration || 1e9); } catch (e) {} r.seek = 0; } });
   el.addEventListener('ended', () => r.next());
   el.addEventListener('error', () => { if (r.host < MUSIC_HOSTS.length - 1) { r.host++; load(r.t); r.sync(); } });
-  r.next = () => { r.i = (r.i + 1) % TRACKS.length; r.t = 0; load(0); r.sync(); save(); };
+  r.next = () => { r.i = (r.i + 1) % TRACKS.length; r.t = 0; load(0); r.sync(); save(); stereoUI(); };
+  r.prev = () => { if (r.started && el.currentTime > 4) { el.currentTime = 0; return; } r.i = (r.i + TRACKS.length - 1) % TRACKS.length; r.t = 0; load(0); r.sync(); save(); stereoUI(); };
+  r.pick = i => { r.i = i; r.t = 0; r.on = true; load(0); r.sync(); save(); stereoUI(); };
+  // every game opens on a different song, from its start
+  r.newGame = () => { let i = r.i; if (TRACKS.length > 1) while (i === r.i) i = Math.floor(Math.random() * TRACKS.length); r.i = i; r.t = 0; if (r.started || r.on) load(0); r.sync(); save(); stereoUI(); };
+  r.playing = () => !el.paused;
+  r.time = () => [el.currentTime || 0, el.duration || 0];
   // plays only after a user gesture (initAudio), when the radio and the game's sound are both on
   r.sync = () => {
     if (!$('radio')) return;
@@ -3228,7 +3299,7 @@ const radio = (() => {
     if (!r.started) load(r.t);
     if (el.paused) el.play().catch(() => {});
   };
-  r.toggle = () => { r.on = !r.on; if (r.on && muted) setMuted(false); r.sync(); save(); };
+  r.toggle = () => { r.on = !r.on; if (r.on && muted) setMuted(false); r.sync(); save(); stereoUI(); };
   r.volume = v => { el.volume = v; };
   r.info = () => ({ on: r.on, i: r.i, t: +el.currentTime.toFixed(1), paused: el.paused, src: el.src.split('/').pop() });
   setInterval(() => { if (!el.paused) save(); }, 3000);
@@ -3262,7 +3333,8 @@ let state = 'loading';
 const screens = ['loading', 'title', 'menu', 'garage', 'lobby', 'hud', 'pause', 'results'];
 function show(...on) {
   if (!on.includes('hud')) { $('dialog').classList.remove('on'); $('hud').classList.remove('talk'); if (typeof BT !== 'undefined' && BT.on) endBT(); }
-  screens.forEach(s => $(s).classList.toggle('on', on.includes(s))); $('touch').style.display = on.includes('hud') && isTouch ? 'block' : 'none'; }
+  screens.forEach(s => $(s).classList.toggle('on', on.includes(s))); $('touch').style.display = on.includes('hud') && isTouch ? 'block' : 'none';
+  if (!on.includes('hud') && typeof releaseSticks === 'function') releaseSticks(); }
 
 const P = { x: 3, z: 26, h: 0, vx: 0, vz: 0, steer: 0, aLong: 0, gLat: 0, speed: 0, wheelSpin: 0, pitch: 0, roll: 0, y: 0, vy: 0, air: false, airT: 0, airMax: 0 };
 const input = { thr: 0, brk: 0, steer: 0, hand: false, rev: false };
@@ -3284,6 +3356,7 @@ function startGame(mode) {
   if (mode !== 'story') setWeather(weather.user, false, false);
   $('r-again').textContent = 'שוב';
   Object.assign(rec, { frames: [], events: [], last: -1 });
+  radio.newGame();
   portalClose(true); GP.portalCd = mode === 'gp' ? 20 : 35 + Math.random() * 40;
   Object.assign(turbo, { lv: 0, t: 0, charges: [] }); nitroUI(); turbo.pads.forEach(placePad); oil.stains.forEach(placeOil); boost.items.forEach(placeBoost); boost.kick = 0; skid.last = []; corner.on = false; $('stv').textContent = '0';
   Object.assign(game, { style: 0, t: 0, score: 100, violations: [], cooldown: {}, maxSpeed: 0, crashes: 0, running: false, inBox: null, goodStops: new Set(), overLimit: 0, wrongSide: 0, sumSpeed: 0, cpIdx: 0 });
@@ -3471,7 +3544,7 @@ function physics(dt) {
   if (input.thr > 0 && input.rev) a -= input.thr * (vf > 0.4 ? 9.5 : vf > -8 ? 3.5 : 0);
   else if (input.thr > 0) a += input.thr * Math.max(0, CARP.accel * (1 - vf / CARP.vmax)) * (vf < 0 ? 2 : 1);
   if (turbo.t > 0 && vf > -1) a += turbo.lv * 3.4 * Math.max(0.35, 1 - vf / (CARP.vmax * (1 + 0.3 * turbo.lv))); // turbo: MACH 1-3
-  if (input.brk > 0) { if (vf > 0.4) a -= input.brk * 9.5 * (1 - 0.32 * weather.k); else if (input.thr === 0) a -= input.brk * (vf > -8 ? 3.5 : 0); }
+  if (input.brk > 0) { if (vf > 0.4) a -= input.brk * 9.5 * (1 - 0.32 * weather.k); else if (input.thr === 0 && !input.hold) a -= input.brk * (vf > -8 ? 3.5 : 0); else if (input.hold) vf *= Math.max(0, 1 - 6 * dt); }
   if (Math.abs(vf) > 0.05) a -= Math.sign(vf) * (0.18 + CARP.dragK * vf * vf + (input.hand ? 4 : 0));
   const vfNew = vf + a * dt;
   if (vf > 0 && vfNew < 0 && input.brk > 0 && input.thr === 0 && vf > 0.4) vf = 0;
@@ -4039,10 +4112,13 @@ const keys = {};
 addEventListener('keydown', e => {
   keys[e.code] = true;
   if (state === 'dialog' && (e.code === 'Space' || e.code === 'Enter')) { e.preventDefault(); dialogAdvance(); return; }
-  if (BT.on && ['Space', 'Enter', 'Escape', 'KeyB'].includes(e.code)) { e.preventDefault(); if (!e.repeat) endBT(); return; } // skip bullet time
+  if (BT.on && e.code === 'Space') { e.preventDefault(); if (!e.repeat) btPause(); return; }
+  if (BT.on && (e.code === 'ArrowLeft' || e.code === 'ArrowRight')) { e.preventDefault(); if (!e.repeat) btGo(btStep() + (e.code === 'ArrowLeft' ? 1 : -1)); return; }
+  if (BT.on && ['Enter', 'Escape', 'KeyB'].includes(e.code)) { e.preventDefault(); if (!e.repeat) endBT(); return; } // skip bullet time
   if (e.code === 'KeyB' && !e.repeat) triggerBT();
   if (e.code === 'KeyN' && !e.repeat) fireNitro();
-  if (e.code === 'KeyM' && !e.repeat && state !== 'title') { initAudio(); radio.toggle(); return; } // radio on/off
+  if (e.code === 'Escape' && $('stereo').classList.contains('on')) { closeStereo(); return; }
+  if (e.code === 'KeyM' && !e.repeat && state !== 'title') { initAudio(); radio.toggle(); return; } // radio play / pause
   if (state === 'title') { goMenu(); return; }
   if (state === 'menu') menuKey(e);
   if (state === 'garage' && !e.repeat) { if (e.code === 'ArrowLeft') stepCar(1); else if (e.code === 'ArrowRight') stepCar(-1); else if (e.code === 'Escape' && !garageThen) $('g-back').click(); else if (e.code === 'Enter') $('g-go').click(); }
@@ -4078,6 +4154,9 @@ touchEl.addEventListener('pointermove', e => {
 });
 const endStick = e => { for (const side of ['L', 'R']) if (sticks[side] && sticks[side].id === e.pointerId) { sticks[side] = null; $('st' + side).classList.remove('on'); } };
 touchEl.addEventListener('pointerup', endStick); touchEl.addEventListener('pointercancel', endStick);
+// a finger lifted anywhere (or the controls hidden mid-press) must release the stick, or a stuck "brake" turns into endless reverse
+addEventListener('pointerup', endStick); addEventListener('pointercancel', endStick);
+function releaseSticks() { for (const side of ['L', 'R']) { sticks[side] = null; $('st' + side).classList.remove('on'); } }
 
 function readInput(dt) {
   let thr = 0, brk = 0, steerT = 0;
@@ -4155,7 +4234,28 @@ function setLessons(on) {
 $('lessons').onclick = () => { setLessons(!lessons); beep(880, 0.06, 'triangle', 0.08); };
 setLessons(lessons);
 $('radio').addEventListener('pointerdown', e => e.stopPropagation());
-$('radio').onclick = e => { e.stopPropagation(); initAudio(); radio.toggle(); beep(880, 0.05, 'triangle', 0.06); };
+$('radio').onclick = e => { e.stopPropagation(); initAudio(); openStereo(); };
+// ---------- the car stereo ----------
+function stereoUI() {
+  const el = $('stereo'); if (!el) return;
+  const on = radio.on && !muted;
+  $('st-name').textContent = TRACKS[radio.i][1];
+  $('st-trk').textContent = `TRACK ${radio.i + 1}/${TRACKS.length}`;
+  $('st-play').textContent = on ? '❚❚' : '▶';
+  el.classList.toggle('playing', on);
+  el.querySelectorAll('.st-pre button').forEach((b, i) => b.classList.toggle('sel', i === radio.i));
+}
+function openStereo() { stereoUI(); $('stereo').classList.add('on'); beep(1200, 0.03, 'square', 0.05); }
+function closeStereo() { $('stereo').classList.remove('on'); }
+$('stereo').addEventListener('pointerdown', e => { e.stopPropagation(); if (e.target === $('stereo')) closeStereo(); });
+$('st-close').onclick = closeStereo;
+$('st-play').onclick = () => { initAudio(); radio.toggle(); click(); };
+$('st-next').onclick = () => { initAudio(); if (!radio.on) radio.toggle(); radio.next(); click(); };
+$('st-prev').onclick = () => { initAudio(); if (!radio.on) radio.toggle(); radio.prev(); click(); };
+$('stereo').querySelector('.st-pre').innerHTML = TRACKS.map((t, i) => `<button type="button" title="${t[1]}">${i + 1}</button>`).join('');
+$('stereo').querySelectorAll('.st-pre button').forEach((b, i) => b.onclick = () => { initAudio(); radio.pick(i); click(); });
+function click() { beep(1800, 0.02, 'square', 0.05); }
+setInterval(() => { if (!$('stereo').classList.contains('on')) return; const [t, d] = radio.time(); $('st-time').textContent = `${Math.floor(t / 60)}:${String(Math.floor(t % 60)).padStart(2, '0')}` + (d ? ` / ${Math.floor(d / 60)}:${String(Math.floor(d % 60)).padStart(2, '0')}` : ''); }, 500);
 // the garage: browsing or, on a first visit, the step before the first drive (then: straight into the mode they picked)
 let garageThen = null;
 function openGarage(then) {
@@ -4223,6 +4323,13 @@ $('pauseBtn').addEventListener('pointerdown', e => { e.stopPropagation(); toggle
 $('nitroBtn').addEventListener('pointerdown', e => { e.stopPropagation(); e.preventDefault(); fireNitro(); });
 $('btBtn').addEventListener('pointerdown', e => { e.stopPropagation(); if (BT.on) endBT(); else triggerBT(); });
 $('bt-skip').addEventListener('pointerdown', e => { e.stopPropagation(); if (BT.on) endBT(); });
+$('bt-steps').addEventListener('pointerdown', e => {
+  e.stopPropagation(); e.preventDefault();
+  const t = e.target.closest('[data-a],[data-k]'); if (!t || !BT.on) return;
+  if (t.dataset.k != null) btGo(+t.dataset.k);
+  else if (t.dataset.a === 'pause') btPause();
+  else btGo(btStep() + (t.dataset.a === 'next' ? 1 : -1));
+});
 $('p-resume').onclick = togglePause;
 $('p-restart').onclick = () => wipe(() => game.mode === 'story' ? startStory(story.ch) : startGame(game.mode));
 $('p-menu').onclick = () => wipe(() => { state = 'menu'; show('menu'); resetCar(0, 0, 0.6); beam.visible = false; engineSound(0, 0, false); const m = $('menu'); m.classList.remove('menu-in'); void m.offsetWidth; m.classList.add('menu-in'); });
@@ -4242,7 +4349,9 @@ const rpmBand = () => { let lo = 0, hi = GEARS[1]; for (let i = 1; i < GEARS.len
 // phones: the garage sidebar covers the right side, so move the image's centre into the free space on the left
 let viewShift = 0;
 function garageFraming() {
-  const portrait = innerHeight > innerWidth, r = state === 'garage' && isTouch ? $('garage').querySelector('.garage-ui').getBoundingClientRect() : null;
+  const portrait = innerHeight > innerWidth;
+  let r = state === 'garage' && isTouch ? $('garage').querySelector('.garage-ui').getBoundingClientRect() : null;
+  if (!r && state === 'menu' && portrait) { const c = $('cards').getBoundingClientRect(); r = { width: 0, height: Math.max(0, innerHeight - c.top) }; }
   const want = r ? (portrait ? 'y' + Math.round(r.height / 2) : Math.round(r.width / 2)) : 0;
   if (want === viewShift) return;
   viewShift = want;
@@ -4273,7 +4382,7 @@ function frame() {
   updateLampLights(dt);
   updateGP(state === 'pause' || state === 'replay' ? 0 : gdt);
   if (state === 'play' || state === 'dialog') {
-    if (state === 'play') readInput(dt); else { input.thr = 0; input.brk = 1; input.steer *= 0.9; }
+    if (state === 'play') { readInput(dt); input.hold = false; } else { input.thr = 0; input.brk = 1; input.hold = true; input.steer *= 0.9; }
     if (!game.running && state === 'play') { input.thr = input.brk = 0; }
     physics(gdt);
     if (state === 'play' && game.mode !== 'story') portalTick(gdt);
@@ -4301,7 +4410,7 @@ function frame() {
     if (!BT.on) chaseCam(dt);
     engineSound(0.15 + rpmBand() * 0.6, 0, false);
   } else if (state === 'pause' || state === 'results') {
-    if (state === 'results') { input.thr = 0; input.brk = 1; physics(gdt); }
+    if (state === 'results') { input.thr = 0; input.brk = 1; input.hold = true; physics(gdt); }
     if (!BT.on) chaseCam(dt);
     engineSound(0.15, 0, state === 'results');
   } else {
@@ -4346,7 +4455,7 @@ function frame() {
 onResize();
 updateWorld(true);
 requestAnimationFrame(() => { frame(); setTimeout(goTitle, 350); });
-window.__n4s = { P, input, game, sigState, startGame: m => startGame(m), setSig: t => { sigClock = t; }, resetCam: () => { camRig.init = true; }, chunkCount: () => chunks.size, triggerBT, setWeather, startStory, BT, weather, groundH, segInfo, get hazards() { return hazards; }, smoke, selectCar, get CARS() { return CARS; }, get carSpec() { return carSpec; }, CARP, startFlip, traffic, turbo, corner, skid, get state() { return state; }, radio, rec, RP, startReplay, camRig, GP, portalSpawn, renderBoard, oil, airPortalSpawn, freePortalSpawn, gpsMesh, nitroUI, boost, strike };
+window.__n4s = { P, input, game, sigState, startGame: m => startGame(m), setSig: t => { sigClock = t; }, resetCam: () => { camRig.init = true; }, chunkCount: () => chunks.size, triggerBT, setWeather, startStory, BT, weather, groundH, segInfo, get hazards() { return hazards; }, smoke, selectCar, get CARS() { return CARS; }, get carSpec() { return carSpec; }, CARP, startFlip, traffic, turbo, corner, skid, get state() { return state; }, radio, openStereo, rec, RP, startReplay, camRig, GP, portalSpawn, renderBoard, oil, airPortalSpawn, freePortalSpawn, gpsMesh, nitroUI, boost, strike };
 </script>
 </body>
 </html>
