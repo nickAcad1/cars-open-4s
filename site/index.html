@@ -280,6 +280,8 @@ body.touch .nitro, body.touch #hud:not(.gp) .nitro { top: auto; right: calc(12px
 body.touch .nitro kbd { display: none; }
 body.portrait.touch .nitro, body.portrait.touch #hud:not(.gp) .nitro { bottom: calc(112px + var(--sab)); }
 #hud.dim .nitro { opacity: .1; }
+.nitro { transition: opacity .3s, transform .3s; }
+.nitro.away { opacity: 0 !important; transform: translateY(8px); pointer-events: none; }
 
 /* ---------- Race against everyone ---------- */
 #gpline, #gpboard { display: none; }
@@ -1955,7 +1957,7 @@ function placePad(pd) {
   }
 }
 function fireNitro() {
-  if (state !== 'play' || !game.running || turbo.t > 0 || !turbo.charges.length || P.flip) return;
+  if (state !== 'play' || !game.running || turbo.t > 0 || !turbo.charges.length || P.flip || !turbo.show) return;
   const lv = Math.max(...turbo.charges); turbo.charges.splice(turbo.charges.indexOf(lv), 1);
   turbo.lv = lv; turbo.t = 3;
   logEvent('turbo', 'ניטרו MACH ' + turbo.lv, `3 שניות של דחיפה נוספת: תאוצה של עד <b>${(turbo.lv * 3.4).toFixed(1)} מ'/שנ'²</b> מעבר למנוע, כלומר כוח נוסף F = m·a ≈ <b>${(CARP.m * turbo.lv * 3.4 / 1000).toFixed(1)} kN</b>.`);
@@ -1983,7 +1985,7 @@ function updateTurbo(dt, gdt) {
       // the ring fills the nitro tank (up to 3 charges); the red switch fires it
       if (turbo.charges.length < 3) turbo.charges.push(pd.lv); else turbo.charges[turbo.charges.indexOf(Math.min(...turbo.charges))] = Math.max(pd.lv, Math.min(...turbo.charges));
       beep(700 + pd.lv * 200, 0.08, 'triangle', 0.12); setTimeout(() => beep(1000 + pd.lv * 200, 0.1, 'triangle', 0.12), 80); glitch = Math.max(glitch, 0.2);
-      coach(`ניטרו נטען · MACH ${pd.lv}`, `לחצו על הכפתור האדום${isTouch ? '' : ' או על N'} כדי להפעיל. במיכל: ${turbo.charges.length}/3`, 'good', 2.2, 1);
+      coach(`ניטרו נטען · MACH ${pd.lv}`, `מעל 88 קמ"ש יופיע מד הניטרו: הקישו עליו${isTouch ? '' : ' או על N'}. במיכל: ${turbo.charges.length}/3`, 'good', 2.2, 1);
       nitroUI();
       placePad(pd);
     }
@@ -2000,6 +2002,9 @@ function updateTurbo(dt, gdt) {
   $('turbo').classList.toggle('on', turbo.t > 0);
   if (turbo.t > 0) $('tb-bar').style.width = (turbo.t / 3 * 100) + '%';
   $('nitroBtn').style.setProperty('--p', turbo.t > 0 ? (turbo.t / 3).toFixed(3) : 0);
+  // nitro only comes out at speed: shown from 88 km/h (hidden again under 84), and while it burns
+  const kmh = P.speed * 3.6; turbo.show = turbo.t > 0 || kmh >= 88 || (turbo.show && kmh > 84);
+  $('nitroBtn').classList.toggle('away', !turbo.show);
 }
 
 // ================= Power-ups =================
