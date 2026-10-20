@@ -340,6 +340,12 @@ body.touch #gl-pos { font-size: 18px; min-width: 48px; }
 
 /* ---------- Physics board (pause) ---------- */
 #pause { overflow-y: auto; }
+/* the board starts at the top and scrolls by touch (the page itself blocks touch scrolling), with a close button that is always in reach */
+#pause.on { place-items: start center; padding: calc(10px + var(--sat)) 0 calc(16px + var(--sab)); touch-action: pan-y; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
+#pause .board, #pause .board * { touch-action: pan-y; }
+#p-x { position: fixed; z-index: 22; bottom: calc(14px + var(--sab)); left: calc(14px + var(--sal)); width: 46px; height: 46px; border-radius: 50%; border: 1px solid rgba(255,255,255,.3);
+  background: rgba(10,16,28,.9); color: #fff; font: 700 20px var(--body); cursor: pointer; display: grid; place-items: center; box-shadow: 0 6px 20px rgba(0,0,0,.5); }
+.board { margin: 0 auto; }
 .board { width: min(1180px, 96vw); max-height: 94vh; overflow-y: auto; padding: 18px 22px 14px; display: grid; gap: 12px; border-radius: 18px;
   background: rgba(6,10,20,.9); border: 1px solid var(--stroke); animation: sheetIn .45s cubic-bezier(.2,.9,.2,1) both; }
 .bd-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
@@ -859,7 +865,7 @@ body.portrait #rp { width: 94vw; }
 <div id="count"></div>
 <div class="hpanel keys-hint" id="keyshint"><span><kbd>↑</kbd>גז</span><span><kbd>↓</kbd>בלם / רוורס</span><span><kbd>←</kbd><kbd>→</kbd>היגוי</span><span><kbd>Q</kbd><kbd>E</kbd>איתות</span><span><kbd>H</kbd>צופר</span><span><kbd>B</kbd>מימד הפיזיקה</span><span><kbd>N</kbd>ניטרו</span><span><kbd>M</kbd>רדיו</span><span><kbd>P</kbd>הפסקה</span></div>
 
-<div id="pause" class="screen overlay"><div class="board">
+<div id="pause" class="screen overlay"><button id="p-x" type="button" aria-label="סגירה וחזרה לנסיעה">✕</button><div class="board">
   <div class="bd-head"><h2>לוח פיזיקה</h2><span class="bd-sub" id="bd-sub"></span>
     <div class="row"><button class="btn" id="p-resume">המשך</button><button class="btn alt" id="p-restart">התחלה מחדש</button><button class="btn alt" id="p-menu">תפריט ראשי</button></div></div>
   <div class="bd-grid">
@@ -4412,6 +4418,7 @@ $('bt-steps').addEventListener('pointerdown', e => {
   else btGo(btStep() + (t.dataset.a === 'next' ? 1 : -1));
 });
 $('p-resume').onclick = togglePause;
+$('p-x').onclick = togglePause;
 $('p-restart').onclick = () => wipe(() => game.mode === 'story' ? startStory(story.ch) : startGame(game.mode));
 $('p-menu').onclick = () => wipe(() => { state = 'menu'; show('menu'); resetCar(0, 0, 0.6); beam.visible = false; engineSound(0, 0, false); const m = $('menu'); m.classList.remove('menu-in'); void m.offsetWidth; m.classList.add('menu-in'); });
 $('r-again').onclick = () => game.mode === 'gp' ? launchGP() : wipe(() => game.mode === 'story' ? startStory(story.again) : startGame(game.mode));
