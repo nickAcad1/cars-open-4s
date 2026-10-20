@@ -797,7 +797,7 @@ body.portrait #rp { width: 94vw; }
       <rect x="6.5" y="34" width="17" height="24" rx="2" fill="#0a0f1a" opacity=".85"/><text x="15" y="44" text-anchor="middle" font-family="Arial Black, Arial" font-size="7" font-weight="900" fill="#fff">N₂O</text><text x="15" y="53" text-anchor="middle" font-family="Arial" font-size="5" fill="#7fdcff">NOS</text>
       <path d="M8 18 Q8 16 12 15" stroke="#fff" stroke-opacity=".6" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
     <span class="lbl">NITRO<small id="nitro-n">0/3</small></span><span class="cells"><i></i><i></i><i></i></span><kbd>N</kbd></button>
-  <button class="hpanel hud-btn bt-btn" id="btBtn" aria-label="מטריקס">⏱</button>
+  <button class="hpanel hud-btn bt-btn" id="btBtn" aria-label="מימד הפיזיקה">⏱</button>
   <button class="hpanel hud-btn" id="pauseBtn" aria-label="השהיה"><svg width="16" height="16" viewBox="0 0 16 16"><rect x="3" y="2" width="3.5" height="12" fill="#fff"/><rect x="9.5" y="2" width="3.5" height="12" fill="#fff"/></svg></button>
 </div>
 
@@ -807,7 +807,7 @@ body.portrait #rp { width: 94vw; }
 </div>
 <div id="edge"></div>
 <div class="horn-ring" id="hornfx"></div>
-<div id="bt"><svg id="bt-lines"></svg><div id="bt-boxes"></div><div id="bt-focus"></div><div id="bt-ring"></div><div id="bt-steps"></div><div class="bt-badge"><b>BULLET TIME</b><span id="bt-scale">×1.00</span></div><button id="bt-skip" type="button">דלג ⏭</button></div>
+<div id="bt"><svg id="bt-lines"></svg><div id="bt-boxes"></div><div id="bt-focus"></div><div id="bt-ring"></div><div id="bt-steps"></div><div class="bt-badge"><b>PHYSICS DIMENSION</b><span id="bt-scale">×1.00</span></div><button id="bt-skip" type="button">דלג ⏭</button></div>
 <div id="rp"><div class="rp-top"><span class="rp-badge">● REPLAY</span><b id="rp-title"></b></div><div class="rp-cap" id="rp-cap"></div><div class="rp-bar"><i id="rp-prog"></i></div>
   <div class="rp-btns"><button class="btn alt" id="rp-again" type="button">שוב ↺</button><button class="btn" id="rp-back" type="button">חזרה ללוח</button></div></div>
 <div id="stereo" role="dialog" aria-label="רדיו"><div class="unit">
@@ -857,7 +857,7 @@ body.portrait #rp { width: 94vw; }
   <button class="chip-btn lb-back" id="lb-back">חזרה לתפריט</button>
 </div>
 <div id="count"></div>
-<div class="hpanel keys-hint" id="keyshint"><span><kbd>↑</kbd>גז</span><span><kbd>↓</kbd>בלם / רוורס</span><span><kbd>←</kbd><kbd>→</kbd>היגוי</span><span><kbd>Q</kbd><kbd>E</kbd>איתות</span><span><kbd>H</kbd>צופר</span><span><kbd>B</kbd>מטריקס</span><span><kbd>N</kbd>ניטרו</span><span><kbd>M</kbd>רדיו</span><span><kbd>P</kbd>הפסקה</span></div>
+<div class="hpanel keys-hint" id="keyshint"><span><kbd>↑</kbd>גז</span><span><kbd>↓</kbd>בלם / רוורס</span><span><kbd>←</kbd><kbd>→</kbd>היגוי</span><span><kbd>Q</kbd><kbd>E</kbd>איתות</span><span><kbd>H</kbd>צופר</span><span><kbd>B</kbd>מימד הפיזיקה</span><span><kbd>N</kbd>ניטרו</span><span><kbd>M</kbd>רדיו</span><span><kbd>P</kbd>הפסקה</span></div>
 
 <div id="pause" class="screen overlay"><div class="board">
   <div class="bd-head"><h2>לוח פיזיקה</h2><span class="bd-sub" id="bd-sub"></span>
@@ -868,7 +868,7 @@ body.portrait #rp { width: 94vw; }
     <section class="bd-card bd-events"><h3>מה קרה בנסיעה</h3><div id="bd-list"></div></section>
     <section class="bd-card bd-graph"><h3>מהירות <span style="color:#3fa3ff">━</span> ומרחק <span style="color:#ffb020">━</span> לאורך הנסיעה</h3><svg id="bd-graph" viewBox="0 0 600 130" preserveAspectRatio="none"></svg><div id="bd-facts"></div></section>
   </div>
-  <p id="p-help">גז: ↑ או W · בלם ורוורס: ↓ או S · היגוי: ← → · בלם יד: רווח · איתות: Q / E · צופר: H · מטריקס: B · ניטרו: N · רדיו: M · הפסקה: P</p>
+  <p id="p-help">גז: ↑ או W · בלם ורוורס: ↓ או S · היגוי: ← → · בלם יד: רווח · איתות: Q / E · צופר: H · מימד הפיזיקה: B · ניטרו: N · רדיו: M · הפסקה: P</p>
 </div></div>
 
 <div id="results" class="screen overlay"><div class="panel sheet">
@@ -2247,7 +2247,7 @@ const btArrows = [0x3fa3ff, 0xffb020, 0xff3d7f].map(c => { const a = new THREE.A
 function triggerBT(kind = false) {
   if (state !== 'play' || !game.running || BT.on || (BT.cd > 0 && kind !== 'flip' && kind !== 'oil')) return false;
   btBegin(kind === 'flip' ? 6.5 : kind === 'oil' ? 6 : kind ? 4.4 : 5.4);
-  if (kind === false) logEvent('freeze', 'עצירת זמן', `${Math.round(P.speed * 3.6)} קמ"ש · תאוצה ${P.aLong.toFixed(1)} מ'/שנ'² · כוח G בפנייה ${P.gLat.toFixed(2)}g`, true);
+  if (kind === false) logEvent('freeze', 'מימד הפיזיקה', `${Math.round(P.speed * 3.6)} קמ"ש · תאוצה ${P.aLong.toFixed(1)} מ'/שנ'² · כוח G בפנייה ${P.gLat.toFixed(2)}g`, true);
   return true;
 }
 const BT_STEP = 3.2;
@@ -2260,7 +2260,7 @@ function btGo(k) {
 }
 function btStep() { const n = BT.boxes.length, step = (BT.dur - 1.4) / n; return clamp(Math.floor((BT.t - 0.9) / step), 0, n - 1); }
 function btBegin(dur) {
-  BT.on = true; BT.t = 0; BT.dur = dur; BT.ang = P.h; BT.look.copy(camRig.look);
+  BT.on = true; BT.t = 0; BT.dur = dur; BT.ang = P.h; BT.look.copy(camRig.look); BT.cp = null;
   glitch = Math.max(glitch, 0.45);
   if (AC) {
     const t = AC.currentTime, o = AC.createOscillator(), g = AC.createGain();
@@ -2394,6 +2394,11 @@ function buildBoxes() {
     say(7, 'כשאין לצמיגים במה להיאחז, ההגה והבלמים לא עוזרים.');
     say(8, 'החיכוך מחזיק את הרכב בכיוון. על שמן הוא כמעט נעלם, ולכן כוחות קטנים מסובבים את הרכב.');
   }
+  const shots = P.spin && !P.flip ? ['topBehind', 'wheel', 'top', 'wheel', 'top', 'road', 'wide', 'top', 'top']
+    : P.flip ? ['side', 'rear', 'front', 'wheel', 'rear', 'rear', 'side', 'wide', 'wide']
+    : ['side', 'rear34', 'front', 'wheel', 'top', 'topBehind', 'wide', 'top', 'road'];
+  BT.boxes.forEach((b, i) => { b.cam = shots[i]; });
+  if (P.air && !P.flip && !P.spin) { BT.boxes[3].cam = 'flight'; BT.boxes[5].cam = 'side'; }
   $('bt-boxes').innerHTML = BT.boxes.map((b, i) => `<div class="btb ${b.side}${b.slot}" style="--d:${0.25 + i * 0.12}s"><i class="c1"></i><i class="c2"></i><div class="t">${b.title}</div><div class="v"><span class="num" data-i="${i}">0</span><small>${b.unit}</small></div>${b.say ? `<div class="say">${b.say}</div>` : ''}<div class="f">${b.formula}</div></div>`).join('');
   BT.boxes.forEach((b, i) => { b.el = $('bt-boxes').children[i]; b.num = b.el.querySelector('[data-i]'); b.delay = 0.25 + i * 0.12; });
 }
@@ -2426,6 +2431,26 @@ function updateGripViz(on) {
     el.innerHTML = `גבול האחיזה <b class="ltr">μ·g = ${aG.toFixed(1)}</b><br>התאוצה עכשיו <b class="ltr" style="color:${over ? '#ff6b6b' : '#6dffb0'}">${am.toFixed(1)} m/s²</b>`; }
   else el.style.display = 'none';
 }
+const _cp = new THREE.Vector3(), _cl = new THREE.Vector3(), _sh = new THREE.Vector3();
+// a point given in the car's frame (x right, y up, z back), turned by the heading only, so the shot stays steady while the car rolls or spins
+const carPt = (v, x, y, z) => { const c = Math.cos(P.h), s = Math.sin(P.h); return v.set(P.x + x * c + z * s, P.y + y, P.z - x * s + z * c); };
+// the shots: where to stand and what to look at, to show each quantity on the car itself
+function camShot(b, pos, look) {
+  const L = carSpec.size.length, W = carSpec.size.width, H = carSpec.size.height, a = b.anchor;
+  switch (b.cam) {
+    case 'side':   carPt(pos, W / 2 + 5.5, 1.1, 0.3); carPt(look, 0, 0.8, -0.6); return 52;                 // moving past: speed
+    case 'rear34': carPt(pos, 3.2, 0.7, L / 2 + 4.2); carPt(look, 0, 0.7, -1.5); return 55;                 // the push from behind: acceleration
+    case 'front':  carPt(pos, 1.2, 1.1, -L / 2 - 6.5); carPt(look, 0, 0.9, 0); return 50;                    // head-on into the air: drag
+    case 'wheel': { const sx = Math.sign(a.x) || 1; carPt(pos, sx * (W / 2 + 2.1), 0.45, a.z + 1.6); carPt(look, sx * W * 0.42, 0.32, a.z); return 42; } // a tyre on the road: rolling friction
+    case 'top':    carPt(pos, 0, 13 + L, 0.6); carPt(look, 0, 0, -0.4); return 50;                           // from above: steering, the grip circle, slip
+    case 'topBehind': carPt(pos, 0, 9, L / 2 + 6); carPt(look, 0, 0, -3); return 55;                         // the curve ahead from above: turning force
+    case 'wide':   carPt(pos, 7, 5.5, 9); carPt(look, 0, 0.8, -1); return 52;                               // the whole car: energy
+    case 'road': { carPt(pos, 0.8, 4.5, L / 2 + 5); _sh.copy(a).applyMatrix4(car.matrixWorld); look.copy(_sh); look.y = P.y; return 60; } // down the road to where it would stop
+    case 'flight': carPt(pos, W / 2 + 10, 2.2, -1); carPt(look, 0, 0.5, -4); return 58;                     // the arc of the jump
+    case 'rear':   carPt(pos, 0, 1.2, L / 2 + 6.5); carPt(look, 0, 0.8, 0); return 48;                       // track width and height: rollover
+  }
+  return 0;
+}
 function updateBT(dt) {
   if (BT.cd > 0) BT.cd -= dt;
   if (!BT.on) { BT.scale = Math.min(1, BT.scale + dt * 8); fx.uniforms.uMatrix.value = Math.max(0, fx.uniforms.uMatrix.value - dt * 6); if (gripRing.visible) updateGripViz(false); $('bt-focus').style.display = 'none'; return; }
@@ -2433,14 +2458,20 @@ function updateBT(dt) {
   BT.scale = Math.max(0.02, BT.scale - dt * 6);
   fx.uniforms.uMatrix.value = Math.min(1, fx.uniforms.uMatrix.value + dt * 4);
   if (BT.t >= BT.dur) { endBT(); return; }
-  // camera: one full orbit, eased, dipping low and close halfway round
+  // camera: by default one slow orbit; each explanation has its own shot that shows it on the car, and the camera glides between them
   const u = clamp(BT.t / BT.dur, 0, 1), e = u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2, mid = Math.sin(u * Math.PI);
   const ang = BT.ang + e * Math.PI * 2, R = lerp(8.8, 5.6, mid);
-  camera.position.set(P.x + Math.sin(ang) * R, lerp(2.9, 1.15, mid) + P.y, P.z + Math.cos(ang) * R);
+  _cp.set(P.x + Math.sin(ang) * R, lerp(2.9, 1.15, mid) + P.y, P.z + Math.cos(ang) * R);
   const w = clamp(Math.min(u, 1 - u) * 8, 0, 1);
-  _a.set(P.x, 0.9 + P.y, P.z).lerp(BT.look, 1 - w);
-  camera.lookAt(_a);
-  const fov = fovFit(lerp(58, 70, mid)); if (Math.abs(camera.fov - fov) > 0.05) { camera.fov = fov; camera.updateProjectionMatrix(); }
+  _cl.set(P.x, 0.9 + P.y, P.z).lerp(BT.look, 1 - w);
+  let fov = lerp(58, 70, mid);
+  { const n0 = BT.boxes.length, st0 = (BT.dur - 1.4) / n0, k0 = Math.floor((BT.t - 0.9) / st0), fb = BT.t >= 0.9 && k0 < n0 ? BT.boxes[k0] : null;
+    if (fb && fb.cam) fov = camShot(fb, _cp, _cl) || fov; }
+  if (!BT.cp) { BT.cp = camera.position.clone(); BT.cl = BT.look.clone(); }
+  const kp = 1 - Math.exp(-dt * 2.4), kl = 1 - Math.exp(-dt * 3);
+  BT.cp.lerp(_cp, kp); BT.cl.lerp(_cl, kl);
+  camera.position.copy(BT.cp); camera.lookAt(BT.cl);
+  fov = fovFit(fov); if (Math.abs(camera.fov - fov) > 0.05) { camera.fov = lerp(camera.fov, fov, kp); camera.updateProjectionMatrix(); }
   car.updateMatrixWorld();
   // physics arrows
   const sp = P.speed, vx = sp > 0.3 ? P.vx / sp : -Math.sin(P.h), vz = sp > 0.3 ? P.vz / sp : -Math.cos(P.h);
@@ -3073,7 +3104,7 @@ function renderBoard() {
   $('bd-list').innerHTML = rec.events.length ? rec.events.map((ev, i) => [ev, i]).reverse().map(([ev, i]) => {
     const [ic, col] = EV_STYLE[ev.kind] || ['•', '#fff'], n = (ev.frames || eventFrames(ev)).length;
     return `<div class="ev"><div class="ic" style="--c:${col}">${ic}</div><div class="et"><b>${ev.title}</b><span>${fmtTime(ev.t)}</span></div><p>${ev.text}</p>` +
-      (n > 8 ? `<button class="rp-btn" type="button" data-i="${i}">▶ ${ev.bt ? 'צפייה חוזרת בזמן קפוא' : 'צפייה חוזרת'}</button>` : '') + '</div>';
+      (n > 8 ? `<button class="rp-btn" type="button" data-i="${i}">▶ ${ev.bt ? 'צפייה חוזרת במימד הפיזיקה' : 'צפייה חוזרת'}</button>` : '') + '</div>';
   }).join('') : '<p class="bd-empty">עוד לא קרה כלום מיוחד. קפצו מרמפה, אספו טורבו, קחו פנייה מהירה ונקייה או לחצו B לעצירת זמן, ותוכלו לראות כאן שוב כל רגע עם הפיזיקה שמאחוריו.</p>';
   $('bd-list').querySelectorAll('.rp-btn').forEach(b => b.onclick = () => startReplay(rec.events[+b.dataset.i]));
 }
@@ -3141,7 +3172,7 @@ const STORY = [
   ] },
   { title: 'פרק 3 · הטיסה של אורי', weather: 'storm', steps: [
     { say: [['אורי', 'הלו? אתם השליחים של מיקי? אני מאחר לטיסה!'], ['אורי', 'תאספו אותי מהכתובת המסומנת, מהר!']], go: 200, label: 'אספו את אורי' },
-    { say: [['אורי', 'סעו! יש שלוש נקודות בדרך לתחנת הרכבת לשדה.'], ['טיפ', 'לחצו B (או על כפתור המטריקס) כדי לעצור את הזמן ולראות את כל הכוחות שפועלים על הרכב.']], go: 180, time: 60, label: 'תחנה 1 מתוך 3' },
+    { say: [['אורי', 'סעו! יש שלוש נקודות בדרך לתחנת הרכבת לשדה.'], ['טיפ', 'לחצו B (או על כפתור השעון) כדי להיכנס למימד הפיזיקה: הזמן כמעט עוצר ורואים את כל הכוחות שפועלים על הרכב.']], go: 180, time: 60, label: 'תחנה 1 מתוך 3' },
     { say: [['אורי', 'רגע, למה עצרתם ברמזור?! ...טוב, אתם צודקים. עדיף להגיע בשלום.']], go: 180, time: 60, label: 'תחנה 2 מתוך 3' },
     { say: [['אורי', 'אני רואה את התחנה!']], go: 180, time: 60, label: 'תחנה 3 מתוך 3' },
     { say: [['אורי', 'הגענו! ובלי אף עבירה. אתם אגדה.'], ['מיקי', 'אורי התקשר ואמר שאתם הנהגים הכי טובים בעיר. עבודה מצוינת.']], end: true }
@@ -3260,7 +3291,7 @@ function engineSound(rpm, load, on) {
   const t = AC.currentTime;
   osc1.frequency.setTargetAtTime(45 + rpm * 150, t, 0.05); osc2.frequency.setTargetAtTime(45 + rpm * 150, t, 0.05);
   engFilter.frequency.setTargetAtTime(350 + rpm * 1600 + load * 900, t, 0.08);
-  engGain.gain.setTargetAtTime(on ? 0.05 + load * 0.06 : 0, t, 0.15);
+  engGain.gain.setTargetAtTime(on ? 0.0125 + load * 0.015 : 0, t, 0.15); // a background hum, not a roar
 }
 function whoosh(up = true) {
   if (!AC) return;
