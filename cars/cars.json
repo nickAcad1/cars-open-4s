@@ -1,0 +1,767 @@
+[
+ {
+  "id": "hatch",
+  "name": "הוט האץ'",
+  "desc": "קטנה, זריזה ומאוזנת",
+  "mass": 1250,
+  "accel": 6.2,
+  "vmax": 62,
+  "Cd": 0.32,
+  "A": 2.1,
+  "CL": 0.1,
+  "hcg": 0.52,
+  "mu": 1.05,
+  "file": "hatch.glb",
+  "rim": "hatch-rim.webp",
+  "size": {
+   "length": 4.03,
+   "width": 2.15,
+   "height": 1.57
+  },
+  "wheelR": 0.315,
+  "tireW": 0.238,
+  "wheelbase": 2.359,
+  "track": 1.63,
+  "wheels": [
+   {
+    "x": -0.815,
+    "y": 0.315,
+    "z": 1.169,
+    "front": false
+   },
+   {
+    "x": 0.815,
+    "y": 0.315,
+    "z": 1.169,
+    "front": false
+   },
+   {
+    "x": -0.82,
+    "y": 0.315,
+    "z": -1.19,
+    "front": true
+   },
+   {
+    "x": 0.82,
+    "y": 0.315,
+    "z": -1.19,
+    "front": true
+   }
+  ],
+  "bytes": 946224
+ },
+ {
+  "id": "pizzavan",
+  "name": "טנדר הפיצה",
+  "desc": "גבוה וכבד: נוטה להתהפך בפניות",
+  "mass": 1650,
+  "accel": 4.2,
+  "vmax": 42,
+  "Cd": 0.38,
+  "A": 3.3,
+  "CL": 0.15,
+  "hcg": 0.62,
+  "mu": 0.95,
+  "file": "pizzavan.glb",
+  "rim": "pizzavan-rim.webp",
+  "size": {
+   "length": 3.43,
+   "width": 1.74,
+   "height": 2.18
+  },
+  "wheelR": 0.3,
+  "tireW": 0.236,
+  "wheelbase": 2.144,
+  "track": 1.19,
+  "wheels": [
+   {
+    "x": -0.595,
+    "y": 0.3,
+    "z": 0.995,
+    "front": false
+   },
+   {
+    "x": 0.595,
+    "y": 0.3,
+    "z": 0.995,
+    "front": false
+   },
+   {
+    "x": -0.601,
+    "y": 0.3,
+    "z": -1.149,
+    "front": true
+   },
+   {
+    "x": 0.601,
+    "y": 0.3,
+    "z": -1.149,
+    "front": true
+   }
+  ],
+  "bytes": 756800
+ },
+ {
+  "id": "taxi",
+  "name": "מונית",
+  "desc": "סדאן עירונית אמינה",
+  "mass": 1500,
+  "accel": 5,
+  "vmax": 52,
+  "Cd": 0.33,
+  "A": 2.3,
+  "CL": 0.12,
+  "hcg": 0.56,
+  "mu": 1,
+  "file": "taxi.glb",
+  "rim": "taxi-rim.webp",
+  "size": {
+   "length": 4.18,
+   "width": 1.97,
+   "height": 1.56
+  },
+  "wheelR": 0.308,
+  "tireW": 0.237,
+  "wheelbase": 2.289,
+  "track": 1.406,
+  "wheels": [
+   {
+    "x": -0.703,
+    "y": 0.308,
+    "z": 1.066,
+    "front": false
+   },
+   {
+    "x": 0.703,
+    "y": 0.308,
+    "z": 1.066,
+    "front": false
+   },
+   {
+    "x": -0.694,
+    "y": 0.308,
+    "z": -1.223,
+    "front": true
+   },
+   {
+    "x": 0.694,
+    "y": 0.308,
+    "z": -1.223,
+    "front": true
+   }
+  ],
+  "bytes": 869148
+ },
+ {
+  "id": "police",
+  "name": "ניידת",
+  "desc": "מנוע חזק ובלמים טובים",
+  "mass": 1750,
+  "accel": 6.4,
+  "vmax": 64,
+  "Cd": 0.33,
+  "A": 2.4,
+  "CL": 0.1,
+  "hcg": 0.56,
+  "mu": 1.08,
+  "file": "police.glb",
+  "rim": "police-rim.webp",
+  "size": {
+   "length": 4.61,
+   "width": 2.05,
+   "height": 1.54
+  },
+  "wheelR": 0.339,
+  "tireW": 0.241,
+  "wheelbase": 2.602,
+  "track": 1.596,
+  "wheels": [
+   {
+    "x": -0.798,
+    "y": 0.339,
+    "z": 1.197,
+    "front": false
+   },
+   {
+    "x": 0.798,
+    "y": 0.339,
+    "z": 1.197,
+    "front": false
+   },
+   {
+    "x": -0.794,
+    "y": 0.339,
+    "z": -1.405,
+    "front": true
+   },
+   {
+    "x": 0.794,
+    "y": 0.339,
+    "z": -1.405,
+    "front": true
+   }
+  ],
+  "bytes": 515976
+ },
+ {
+  "id": "supercar",
+  "name": "סופרקאר",
+  "desc": "מנוע מרכזי וכוח לחיצה אווירודינמי",
+  "mass": 1420,
+  "accel": 9,
+  "vmax": 88,
+  "Cd": 0.3,
+  "A": 2,
+  "CL": -0.35,
+  "hcg": 0.43,
+  "mu": 1.2,
+  "file": "supercar.glb",
+  "rim": "supercar-rim.webp",
+  "size": {
+   "length": 4.1,
+   "width": 2.27,
+   "height": 1.24
+  },
+  "wheelR": 0.302,
+  "tireW": 0.236,
+  "wheelbase": 2.256,
+  "track": 1.824,
+  "wheels": [
+   {
+    "x": -0.912,
+    "y": 0.302,
+    "z": 1.19,
+    "front": false
+   },
+   {
+    "x": 0.912,
+    "y": 0.302,
+    "z": 1.19,
+    "front": false
+   },
+   {
+    "x": -0.81,
+    "y": 0.302,
+    "z": -1.066,
+    "front": true
+   },
+   {
+    "x": 0.81,
+    "y": 0.302,
+    "z": -1.066,
+    "front": true
+   }
+  ],
+  "bytes": 790636
+ },
+ {
+  "id": "suv",
+  "name": "ג'יפ שטח",
+  "desc": "מרכז כובד גבוה: זהירות בפניות",
+  "mass": 2150,
+  "accel": 4.8,
+  "vmax": 50,
+  "Cd": 0.42,
+  "A": 2.9,
+  "CL": 0.18,
+  "hcg": 0.8,
+  "mu": 0.98,
+  "file": "suv.glb",
+  "rim": "suv-rim.webp",
+  "size": {
+   "length": 4.76,
+   "width": 2.33,
+   "height": 2.02
+  },
+  "wheelR": 0.438,
+  "tireW": 0.253,
+  "wheelbase": 2.773,
+  "track": 1.764,
+  "wheels": [
+   {
+    "x": -0.882,
+    "y": 0.438,
+    "z": 1.286,
+    "front": false
+   },
+   {
+    "x": 0.882,
+    "y": 0.438,
+    "z": 1.286,
+    "front": false
+   },
+   {
+    "x": -0.885,
+    "y": 0.438,
+    "z": -1.488,
+    "front": true
+   },
+   {
+    "x": 0.885,
+    "y": 0.438,
+    "z": -1.488,
+    "front": true
+   }
+  ],
+  "bytes": 874348
+ },
+ {
+  "id": "muscle",
+  "name": "מאסל קאר",
+  "desc": "המון כוח, מעט אחיזה",
+  "mass": 1600,
+  "accel": 7.6,
+  "vmax": 70,
+  "Cd": 0.4,
+  "A": 2.2,
+  "CL": 0.25,
+  "hcg": 0.52,
+  "mu": 0.95,
+  "file": "muscle.glb",
+  "rim": "muscle-rim.webp",
+  "size": {
+   "length": 4.51,
+   "width": 1.95,
+   "height": 1.37
+  },
+  "wheelR": 0.291,
+  "tireW": 0.235,
+  "wheelbase": 2.37,
+  "track": 1.628,
+  "wheels": [
+   {
+    "x": -0.814,
+    "y": 0.291,
+    "z": 1.084,
+    "front": false
+   },
+   {
+    "x": 0.814,
+    "y": 0.291,
+    "z": 1.084,
+    "front": false
+   },
+   {
+    "x": -0.79,
+    "y": 0.291,
+    "z": -1.287,
+    "front": true
+   },
+   {
+    "x": 0.79,
+    "y": 0.291,
+    "z": -1.287,
+    "front": true
+   }
+  ],
+  "bytes": 765104
+ },
+ {
+  "id": "citycar",
+  "name": "מכונית עיר",
+  "desc": "זעירה וחסכונית",
+  "mass": 900,
+  "accel": 4,
+  "vmax": 42,
+  "Cd": 0.34,
+  "A": 1.9,
+  "CL": 0.15,
+  "hcg": 0.55,
+  "mu": 0.95,
+  "file": "citycar.glb",
+  "rim": "citycar-rim.webp",
+  "size": {
+   "length": 2.73,
+   "width": 1.61,
+   "height": 1.48
+  },
+  "wheelR": 0.257,
+  "tireW": 0.231,
+  "wheelbase": 1.629,
+  "track": 1.24,
+  "wheels": [
+   {
+    "x": -0.62,
+    "y": 0.257,
+    "z": 0.784,
+    "front": false
+   },
+   {
+    "x": 0.62,
+    "y": 0.257,
+    "z": 0.784,
+    "front": false
+   },
+   {
+    "x": -0.611,
+    "y": 0.257,
+    "z": -0.845,
+    "front": true
+   },
+   {
+    "x": 0.611,
+    "y": 0.257,
+    "z": -0.845,
+    "front": true
+   }
+  ],
+  "bytes": 730712
+ },
+ {
+  "id": "esedan",
+  "name": "סדאן חשמלית",
+  "desc": "מומנט מיידי ואווירודינמיקה חלקה",
+  "mass": 1950,
+  "accel": 8.2,
+  "vmax": 70,
+  "Cd": 0.23,
+  "A": 2.3,
+  "CL": 0.05,
+  "hcg": 0.48,
+  "mu": 1.05,
+  "file": "esedan.glb",
+  "rim": "esedan-rim.webp",
+  "size": {
+   "length": 4.27,
+   "width": 2.16,
+   "height": 1.45
+  },
+  "wheelR": 0.344,
+  "tireW": 0.241,
+  "wheelbase": 2.391,
+  "track": 1.56,
+  "wheels": [
+   {
+    "x": -0.78,
+    "y": 0.344,
+    "z": 1.057,
+    "front": false
+   },
+   {
+    "x": 0.78,
+    "y": 0.344,
+    "z": 1.057,
+    "front": false
+   },
+   {
+    "x": -0.763,
+    "y": 0.344,
+    "z": -1.334,
+    "front": true
+   },
+   {
+    "x": 0.763,
+    "y": 0.344,
+    "z": -1.334,
+    "front": true
+   }
+  ],
+  "bytes": 639396
+ },
+ {
+  "id": "hypercar",
+  "name": "היפרקאר",
+  "desc": "כוח לחיצה עצום במהירות",
+  "mass": 1350,
+  "accel": 10.5,
+  "vmax": 100,
+  "Cd": 0.28,
+  "A": 1.9,
+  "CL": -0.6,
+  "hcg": 0.4,
+  "mu": 1.25,
+  "file": "hypercar.glb",
+  "rim": "hypercar-rim.webp",
+  "size": {
+   "length": 4.44,
+   "width": 2.18,
+   "height": 1.24
+  },
+  "wheelR": 0.286,
+  "tireW": 0.234,
+  "wheelbase": 2.433,
+  "track": 1.846,
+  "wheels": [
+   {
+    "x": -0.923,
+    "y": 0.286,
+    "z": 1.222,
+    "front": false
+   },
+   {
+    "x": 0.923,
+    "y": 0.286,
+    "z": 1.222,
+    "front": false
+   },
+   {
+    "x": -0.868,
+    "y": 0.286,
+    "z": -1.211,
+    "front": true
+   },
+   {
+    "x": 0.868,
+    "y": 0.286,
+    "z": -1.211,
+    "front": true
+   }
+  ],
+  "bytes": 646672
+ },
+ {
+  "id": "jdmcoupe",
+  "name": "קופה יפנית",
+  "desc": "קלה ומאוזנת, נהדרת להחלקות",
+  "mass": 1300,
+  "accel": 6.6,
+  "vmax": 66,
+  "Cd": 0.3,
+  "A": 2,
+  "CL": 0.05,
+  "hcg": 0.47,
+  "mu": 1.05,
+  "file": "jdmcoupe.glb",
+  "rim": "jdmcoupe-rim.webp",
+  "size": {
+   "length": 4.35,
+   "width": 2.05,
+   "height": 1.39
+  },
+  "wheelR": 0.31,
+  "tireW": 0.237,
+  "wheelbase": 2.293,
+  "track": 1.62,
+  "wheels": [
+   {
+    "x": -0.81,
+    "y": 0.31,
+    "z": 1.022,
+    "front": false
+   },
+   {
+    "x": 0.81,
+    "y": 0.31,
+    "z": 1.022,
+    "front": false
+   },
+   {
+    "x": -0.81,
+    "y": 0.31,
+    "z": -1.272,
+    "front": true
+   },
+   {
+    "x": 0.81,
+    "y": 0.31,
+    "z": -1.272,
+    "front": true
+   }
+  ],
+  "bytes": 749384
+ },
+ {
+  "id": "minivan",
+  "name": "מיניוואן",
+  "desc": "משפחתית, גבוהה ונינוחה",
+  "mass": 2000,
+  "accel": 4.4,
+  "vmax": 50,
+  "Cd": 0.33,
+  "A": 3,
+  "CL": 0.12,
+  "hcg": 0.74,
+  "mu": 0.98,
+  "file": "minivan.glb",
+  "rim": "minivan-rim.webp",
+  "size": {
+   "length": 4.56,
+   "width": 2.38,
+   "height": 1.84
+  },
+  "wheelR": 0.367,
+  "tireW": 0.244,
+  "wheelbase": 2.739,
+  "track": 1.746,
+  "wheels": [
+   {
+    "x": -0.873,
+    "y": 0.367,
+    "z": 1.381,
+    "front": false
+   },
+   {
+    "x": 0.873,
+    "y": 0.367,
+    "z": 1.381,
+    "front": false
+   },
+   {
+    "x": -0.872,
+    "y": 0.367,
+    "z": -1.358,
+    "front": true
+   },
+   {
+    "x": 0.872,
+    "y": 0.367,
+    "z": -1.358,
+    "front": true
+   }
+  ],
+  "bytes": 754312
+ },
+ {
+  "id": "pickup",
+  "name": "טנדר",
+  "desc": "כבד וחזק, מרכז כובד גבוה",
+  "mass": 2250,
+  "accel": 5.2,
+  "vmax": 52,
+  "Cd": 0.45,
+  "A": 3.1,
+  "CL": 0.2,
+  "hcg": 0.78,
+  "mu": 1,
+  "file": "pickup.glb",
+  "rim": "pickup-rim.webp",
+  "size": {
+   "length": 6.33,
+   "width": 2.78,
+   "height": 1.84
+  },
+  "wheelR": 0.393,
+  "tireW": 0.247,
+  "wheelbase": 3.846,
+  "track": 2.064,
+  "wheels": [
+   {
+    "x": -1.032,
+    "y": 0.393,
+    "z": 1.709,
+    "front": false
+   },
+   {
+    "x": 1.032,
+    "y": 0.393,
+    "z": 1.709,
+    "front": false
+   },
+   {
+    "x": -1.003,
+    "y": 0.393,
+    "z": -2.136,
+    "front": true
+   },
+   {
+    "x": 1.003,
+    "y": 0.393,
+    "z": -2.136,
+    "front": true
+   }
+  ],
+  "bytes": 764688
+ },
+ {
+  "id": "rally",
+  "name": "מכונית ראלי",
+  "desc": "הנעה כפולה וצמיגי חצץ",
+  "mass": 1250,
+  "accel": 7.4,
+  "vmax": 64,
+  "Cd": 0.35,
+  "A": 2.1,
+  "CL": -0.1,
+  "hcg": 0.5,
+  "mu": 1.1,
+  "file": "rally.glb",
+  "rim": "rally-rim.webp",
+  "size": {
+   "length": 3.75,
+   "width": 1.87,
+   "height": 1.47
+  },
+  "wheelR": 0.242,
+  "tireW": 0.229,
+  "wheelbase": 2.186,
+  "track": 1.354,
+  "wheels": [
+   {
+    "x": -0.677,
+    "y": 0.242,
+    "z": 1.097,
+    "front": false
+   },
+   {
+    "x": 0.677,
+    "y": 0.242,
+    "z": 1.097,
+    "front": false
+   },
+   {
+    "x": -0.687,
+    "y": 0.242,
+    "z": -1.088,
+    "front": true
+   },
+   {
+    "x": 0.687,
+    "y": 0.242,
+    "z": -1.088,
+    "front": true
+   }
+  ],
+  "bytes": 761980
+ },
+ {
+  "id": "roadster",
+  "name": "רודסטר קלאסי",
+  "desc": "פתוחה, קלה ונמוכה",
+  "mass": 1000,
+  "accel": 5.4,
+  "vmax": 56,
+  "Cd": 0.38,
+  "A": 1.8,
+  "CL": 0.2,
+  "hcg": 0.45,
+  "mu": 0.95,
+  "file": "roadster.glb",
+  "rim": "roadster-rim.webp",
+  "size": {
+   "length": 4.29,
+   "width": 1.88,
+   "height": 1.47
+  },
+  "wheelR": 0.385,
+  "tireW": 0.246,
+  "wheelbase": 2.416,
+  "track": 1.458,
+  "wheels": [
+   {
+    "x": -0.729,
+    "y": 0.385,
+    "z": 1.106,
+    "front": false
+   },
+   {
+    "x": 0.729,
+    "y": 0.385,
+    "z": 1.106,
+    "front": false
+   },
+   {
+    "x": -0.74,
+    "y": 0.385,
+    "z": -1.31,
+    "front": true
+   },
+   {
+    "x": 0.74,
+    "y": 0.385,
+    "z": -1.31,
+    "front": true
+   }
+  ],
+  "bytes": 795280
+ }
+]
