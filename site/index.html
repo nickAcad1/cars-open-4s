@@ -523,7 +523,12 @@ body.portrait #bt-steps b { width: 100%; text-align: center; margin: 0; }
 #bt-focus .t { font: 800 12px var(--display); color: #6dffb0; margin-bottom: 4px; }
 #bt-focus .l { font: 700 17px/1.35 var(--body); direction: ltr; unicode-bidi: isolate; animation: btLine .35s cubic-bezier(.2,.9,.2,1) both; }
 #bt-focus .l sub { font-size: 11px; }
-#bt-focus .s1 { color: #b8f5d4; } #bt-focus .s2 { font: 800 22px/1.3 var(--dash); color: #fff; text-shadow: 0 0 14px #4dff9a; }
+#bt-focus .s1 { color: #b8f5d4; } #bt-focus .s2 { font: 800 24px/1.3 var(--dash); color: #fff; text-shadow: 0 0 14px #4dff9a; direction: rtl; unicode-bidi: plaintext; }
+#bt-focus { max-width: min(420px, 86vw); }
+#bt-focus .say { font: 600 17px/1.45 var(--display); direction: rtl; unicode-bidi: plaintext; color: #f2fff8; text-align: center; }
+#bt-focus .eq { font: 500 12px/1.4 var(--body); color: #8fd9b4; opacity: .85; margin-top: 4px; }
+.btb .say { font: 600 13.5px/1.45 var(--display); color: #eafff4; margin: 4px 0 2px; direction: rtl; unicode-bidi: plaintext; }
+.btb .f { font-size: 11px !important; opacity: .7; }
 @keyframes btLine { from { opacity: 0; transform: translateY(6px); } }
 #bt-ring { position: absolute; transform: translate(-50%, 10px); font: 600 12px/1.35 var(--body); color: #c6f7dd; text-align: center; text-shadow: 0 1px 4px #000; white-space: nowrap; pointer-events: none; }
 .btb { position: absolute; width: 270px; padding: 10px 14px 11px; background: rgba(3,14,9,.8); border: 1px solid rgba(109,255,176,.45); color: #dfffee; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: 0 0 24px rgba(77,255,154,.18); opacity: 0; animation: btIn .45s cubic-bezier(.2,.9,.2,1) var(--d) forwards; zoom: var(--hz, 1); }
@@ -766,7 +771,7 @@ body.portrait #rp { width: 94vw; }
       <div class="bar2"><div class="react" id="tr1"></div><div class="brk" id="tr2"></div><div class="line" id="tr3"></div></div>
       <div class="legend"><span style="--c:#6b7d96">זמן תגובה</span><span style="--c:var(--amber)">בלימה</span><span style="--c:#fff">קו עצירה</span></div>
     </div>
-    <div class="formula" id="pform">מרחק בלימה = <b>v² ÷ 2a</b></div>
+    <div class="formula" id="pform">הרכב עומד</div>
   </div>
   <div class="hpanel gear z"><div class="v num" id="gear">N</div><div class="k">הילוך</div></div>
   <svg class="speedo z" viewBox="0 0 330 330">
@@ -2295,7 +2300,7 @@ function buildBoxes() {
     box('b', 0, 'מרחק עצירה', stop, "מ'", 1, `d = v·t + v² / 2a · ${weather.k > 0.3 ? 'כביש רטוב' : 'כביש יבש'}, a = ${brakeA().toFixed(1)} מ'/שנ'²`, [0, 0.05, -2.4 - Math.min(stop, 22)])
   ];
   const work = (i, sym, sub, res) => Object.assign(BT.boxes[i], { sym, sub, res });
-  work(0, 'v = Δx / Δt', `${(v * 0.1).toFixed(2)} מ' / 0.1 שנ'`, `${v.toFixed(1)} מ'/שנ' = ${Math.round(v * 3.6)} קמ"ש`);
+  work(0, 'v = Δx / Δt', `${(v * 0.1).toFixed(2)} מ' / 0.1 שנ'`, `${Math.round(v * 3.6)} קמ"ש`);
   work(1, 'F = m · a', `${m} × ${a.toFixed(1)}`, `${(m * a / 1000).toFixed(2)} kN`);
   work(2, 'F = ½ · ρ · C<sub>d</sub> · A · v²', `½ × 1.2 × ${Cd} × ${A} × ${v.toFixed(1)}²`, `${drag.toFixed(0)} N`);
   work(3, 'F = C<sub>rr</sub> · m · g', `0.015 × ${m} × 9.8`, `${roll.toFixed(0)} N`);
@@ -2304,6 +2309,17 @@ function buildBoxes() {
   work(6, 'E = ½ · m · v²', `½ × ${m} × ${v.toFixed(1)}²`, `${(ek / 1000).toFixed(0)} kJ`);
   work(7, 'β = atan(v<sub>צד</sub> / v<sub>קדימה</sub>)', `atan(${(P.slip || 0).toFixed(1)} / ${Math.max(0.1, Math.abs(P.vf || 0)).toFixed(1)})`, `${slip.toFixed(1)}°`);
   work(8, 'd = v · t + v² / 2a', `${v.toFixed(1)} × 0.75 + ${v.toFixed(1)}² / (2 × ${brakeA().toFixed(1)})`, `${stop.toFixed(1)} מ'`);
+  const say = (i, text) => { BT.boxes[i].say = text; };
+  const kmh = Math.round(v * 3.6), carLen = n => (n / 4.5).toFixed(0), kg = N => Math.round(N / g);
+  say(0, v < 0.5 ? 'הרכב כמעט עומד.' : `נוסעים ${kmh} קמ"ש: בכל שנייה הרכב עובר ${v.toFixed(0)} מטר, בערך ${carLen(v)} אורכי מכונית.`);
+  say(1, a > 0.3 ? `המנוע דוחף קדימה: בכל שנייה המהירות עולה בעוד ${Math.round(a * 3.6)} קמ"ש.` : a < -0.3 ? `הרכב מאט: בכל שנייה המהירות יורדת ב-${Math.round(-a * 3.6)} קמ"ש.` : 'המהירות כמעט לא משתנה: הכוחות שדוחפים קדימה ואחורה מאוזנים.');
+  say(2, `האוויר דוחף את הרכב אחורה, כמו משקולת של ${kg(drag)} ק"ג שמושכת לאחור. במהירות כפולה הדחיפה גדלה פי 4.`);
+  say(3, `הצמיגים מתמעכים קצת על הכביש וזה מאט את הרכב, כמו לגרור ${kg(roll)} ק"ג. הכוח הזה כמעט לא תלוי במהירות.`);
+  say(4, isFinite(R) ? `ההגה מסובב ${deg(steer).toFixed(0)}°, ולכן הרכב נע על מעגל שהרדיוס שלו ${R.toFixed(0)} מטר. יותר הגה = מעגל קטן יותר.` : 'ההגה ישר, והרכב נוסע בקו ישר.');
+  say(5, lat < 0.2 ? 'כמעט אין פנייה, ולכן כמעט אין כוח לצד.' : `כדי לפנות, הצמיגים דוחפים את הרכב לצד. את זה מרגישים כמו ${Math.round(lat / g * 100)}% ממשקל הגוף שלכם שדוחף אתכם הצידה.`);
+  say(6, v < 0.5 ? 'רכב עומד: אין לו אנרגיית תנועה.' : `זו האנרגיה שהבלמים יצטרכו להפוך לחום כדי לעצור. אותה אנרגיה כמו ליפול מגובה ${(v * v / (2 * g)).toFixed(0)} מטר.`);
+  say(7, slip < 3 ? `הרכב נוסע כמעט בדיוק לאן שהוא מכוון (${slip.toFixed(0)}° הבדל). הצמיגים אוחזים.` : `הרכב נוסע ${slip.toFixed(0)}° הצידה מהכיוון שהוא מכוון אליו: הוא מחליק.`);
+  say(8, v < 0.5 ? 'הרכב עומד.' : `אם תבלמו עכשיו, תעצרו אחרי ${stop.toFixed(0)} מטר, בערך ${carLen(stop)} אורכי מכונית.${weather.k > 0.3 ? ' על כביש רטוב זה ארוך יותר.' : ''}`);
   if (P.air) {
     // in the air: projectile motion replaces rolling friction and the turn
     const vy = P.vy, vh = P.speed, hMax = P.y + Math.max(0, vy) ** 2 / (2 * g), tLeft = (vy + Math.sqrt(vy * vy + 2 * g * Math.max(0, P.y))) / g;
@@ -2311,6 +2327,8 @@ function buildBoxes() {
     BT.boxes[5] = box('r', 1, 'זווית המראה', deg(Math.atan2(vy, vh)), '°', 1, `tan θ = v<sub>y</sub> / v<sub>x</sub> = ${vy.toFixed(1)} / ${vh.toFixed(1)}`, [0.98, 0.3, -2.0]);
     work(3, 'h<sub>max</sub> = h + v<sub>y</sub>² / 2g', `${P.y.toFixed(1)} + ${Math.max(0, vy).toFixed(1)}² / (2 × 9.8)`, `${hMax.toFixed(1)} מ'`);
     work(5, 'θ = atan(v<sub>y</sub> / v<sub>x</sub>)', `atan(${vy.toFixed(1)} / ${vh.toFixed(1)})`, `${deg(Math.atan2(vy, vh)).toFixed(1)}°`);
+    say(3, `באוויר אין אחיזה, וההגה לא עוזר. רק כוח המשיכה פועל: הרכב יעלה עד ${hMax.toFixed(1)} מטר ויגיע לקרקע בעוד ${tLeft.toFixed(1)} שניות.`);
+    say(5, `הרכב המריא בזווית ${deg(Math.atan2(vy, vh)).toFixed(0)}°. זווית גדולה יותר = קפיצה גבוהה יותר.`);
   }
   if (P.flip) {
     const f = P.flip, t = CARP.track, hc = CARP.hcg, ssf = CARP.ssf, q = 0.5 * rho * f.v0 * f.v0 * A, liftN = CARP.CL * q, aG = P.aGrip || CARP.mu * g;
@@ -2338,6 +2356,15 @@ function buildBoxes() {
     work(3, 'a<sub>max</sub> = μ · (g − L/m)', `${CARP.mu} × (9.8 − ${(liftN / m).toFixed(2)})`, `${(aG / g).toFixed(2)}g`);
     work(4, 'SSF = t / 2h', `${t.toFixed(2)} / (2 × ${hc.toFixed(2)})`, `${ssf.toFixed(2)}g`);
     work(5, 'τ = m · a · h', `${m} × ${aLat.toFixed(1)} × ${hc.toFixed(2)}`, `${tipping.toFixed(1)} kN·m > ${holding.toFixed(1)}`);
+    say(0, `${Math.round(f.v0 * 3.6)} קמ"ש ברגע שהרכב התחיל להתהפך.`);
+    say(1, `הרכב נדחף לצד בעוצמה של ${Math.round(aLat / g * 100)}% ממשקלו.`);
+    say(2, CARP.CL < 0 ? 'האוויר לוחץ את הרכב אל הכביש ועוזר לו להיצמד.' : 'האוויר מרים קצת את הרכב, ולכן לצמיגים יש פחות אחיזה.');
+    say(3, `הצמיגים יכלו להחזיק דחיפה לצד של עד ${Math.round(aG / g * 100)}% ממשקל הרכב.`);
+    say(4, `הרכב הזה מתהפך כשהדחיפה לצד עוברת ${Math.round(ssf * 100)}% ממשקלו. רכב רחב ונמוך יציב יותר.`);
+    say(5, 'הדחיפה לצד מסובבת את הרכב סביב הגלגלים החיצוניים, והמשקל מנסה להחזיר אותו. הפעם הדחיפה ניצחה.');
+    say(6, `מרכז הכובד של הרכב בגובה ${hc.toFixed(2)} מטר. ככל שהוא גבוה יותר, קל יותר להתהפך.`);
+    say(7, f.cause === 'turn' ? 'פנייה מהירה מדי. במהירות כפולה הדחיפה לצד גדלה פי 4, אז מאטים לפני הפנייה.' : 'הרכב החליק לצד. מאטים לפני פניות ולא מושכים בלם יד במהירות.');
+    say(8, why + '.');
   }
   if (P.spin && !P.flip) {
     const s2 = P.spin, v0 = s2.v0, aDry = s2.mu * g, aOil = OIL_MU * g, w = 2 * Math.PI / s2.T;
@@ -2356,8 +2383,17 @@ function buildBoxes() {
     Object.assign(BT.boxes[2], { sym: 'a = μ · g', sub: `${OIL_MU} × 9.8`, res: `${aOil.toFixed(2)} מ'/שנ'²` });
     Object.assign(BT.boxes[4], { sym: 'ω = 2π / T', sub: `2 × 3.14 / ${s2.T}`, res: `${w.toFixed(1)} rad/s` });
     Object.assign(BT.boxes[5], { sym: 'd = v² / 2μg', sub: `${v0.toFixed(1)}² / (2 × ${OIL_MU} × 9.8)`, res: `${(v0 * v0 / (2 * aOil)).toFixed(0)} מ'` });
+    say(0, `${Math.round(v0 * 3.6)} קמ"ש. הרכב ממשיך לנוע ישר מכוח ההתמדה, גם כשהוא מסתובב.`);
+    say(1, 'על שמן הצמיגים אוחזים בערך פי 10 פחות מאשר על אספלט יבש.');
+    say(2, 'עם כל כך מעט אחיזה, ההגה והבלמים כמעט לא משפיעים.');
+    say(3, `כוח החיכוך שנשאר קטן מאוד: כמו לגרור ${kg(OIL_MU * m * g)} ק"ג בלבד.`);
+    say(4, `הרכב מסתובב סיבוב שלם בתוך ${s2.T} שניות.`);
+    say(5, `על השמן צריך ${(v0 * v0 / (2 * aOil)).toFixed(0)} מטר כדי לעצור, במקום ${(v0 * v0 / (2 * aDry)).toFixed(0)} מטר על כביש יבש.`);
+    say(6, 'כמעט כל האנרגיה נשארת, כי אין כמעט חיכוך שיקח אותה. לכן הרכב ממשיך להחליק.');
+    say(7, 'כשאין לצמיגים במה להיאחז, ההגה והבלמים לא עוזרים.');
+    say(8, 'החיכוך מחזיק את הרכב בכיוון. על שמן הוא כמעט נעלם, ולכן כוחות קטנים מסובבים את הרכב.');
   }
-  $('bt-boxes').innerHTML = BT.boxes.map((b, i) => `<div class="btb ${b.side}${b.slot}" style="--d:${0.25 + i * 0.12}s"><i class="c1"></i><i class="c2"></i><div class="t">${b.title}</div><div class="v"><span class="num" data-i="${i}">0</span><small>${b.unit}</small></div><div class="f">${b.formula}</div></div>`).join('');
+  $('bt-boxes').innerHTML = BT.boxes.map((b, i) => `<div class="btb ${b.side}${b.slot}" style="--d:${0.25 + i * 0.12}s"><i class="c1"></i><i class="c2"></i><div class="t">${b.title}</div><div class="v"><span class="num" data-i="${i}">0</span><small>${b.unit}</small></div>${b.say ? `<div class="say">${b.say}</div>` : ''}<div class="f">${b.formula}</div></div>`).join('');
   BT.boxes.forEach((b, i) => { b.el = $('bt-boxes').children[i]; b.num = b.el.querySelector('[data-i]'); b.delay = 0.25 + i * 0.12; });
 }
 const _a = new THREE.Vector3();
@@ -2422,8 +2458,9 @@ function updateBT(dt) {
   if (focus) {
     const stage = su < 0.22 ? 0 : su < 0.5 ? 1 : 2;
     if (fe._si !== si || fe._box !== focus) { fe._si = si; fe._box = focus; fe._stage = -1; fe.innerHTML = `<div class="t">${focus.title}</div>`; }
-    const lines = [focus.sym || focus.title, '= ' + (focus.sub || focus.formula), '= ' + (focus.res || (typeof focus.value === 'number' ? focus.value.toFixed(focus.dec) + ' ' + focus.unit : focus.value))];
-    while (fe._stage < stage) { fe._stage++; const d = document.createElement('div'); d.className = 'l s' + fe._stage; d.innerHTML = lines[fe._stage]; fe.appendChild(d); }
+    const res = focus.res || (typeof focus.value === 'number' ? focus.value.toFixed(focus.dec) + ' ' + focus.unit : focus.value);
+    const lines = [[focus.say || focus.formula, 'say'], [res, 's2'], [focus.sym ? `${focus.sym} = ${focus.sub}` : '', 'eq']];
+    while (fe._stage < stage) { fe._stage++; const [html, cls] = lines[fe._stage]; if (!html) continue; const d = document.createElement('div'); d.className = 'l ' + cls; d.innerHTML = html; fe.appendChild(d); }
     _a.copy(focus.anchor).applyMatrix4(car.matrixWorld).project(camera);
     if (_a.z < 1) { fe.style.display = 'block'; fe.style.left = ((_a.x * 0.5 + 0.5) * innerWidth) + 'px'; fe.style.top = ((-_a.y * 0.5 + 0.5) * innerHeight) + 'px'; } else fe.style.display = 'none';
   } else fe.style.display = 'none';
@@ -4036,7 +4073,7 @@ function updateHud(dt) {
   $('tr3').style.display = near ? '' : 'none'; if (near) $('tr3').style.left = (ah.d / span * 100) + '%';
   $('pline').innerHTML = near ? `עד הקו: <b class="num">${Math.round(ah.d)}</b> מ'` : 'אין רמזור קרוב';
   const verdict = near && sigState[ah.group] !== 'g' ? (sd < ah.d ? ' · <span class="ok">תספיקו לעצור</span>' : ' · <span class="no">בלמו עכשיו!</span>') : '';
-  $('pform').innerHTML = `מרחק בלימה = <b>v² ÷ 2a</b> = <span class="num">${v.toFixed(1)}² ÷ (2×${brakeA().toFixed(1)})</span> ≈ <b class="num">${bd.toFixed(1)}</b> מ'${verdict}`;
+  $('pform').innerHTML = v < 0.5 ? 'הרכב עומד' : `אם תבלמו עכשיו תעצרו אחרי <b class="num">${Math.round(sd)}</b> מטר${verdict}`;
   let gear = 0;
   for (let i = 1; i < GEARS.length; i++) if (v >= GEARS[i]) gear = i;
   $('gear').innerHTML = (P.vf || 0) < -0.3 ? 'R' : v < 0.3 && input.thr === 0 ? 'N' : `D<span>${Math.min(gear + 1, 6)}</span>`;
